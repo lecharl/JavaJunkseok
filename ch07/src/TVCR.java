@@ -1,5 +1,5 @@
 
-public class TVCR extends TV{
+public class TVCR extends TV00{
 	VCR vcr = new VCR();
 	
 	void play() {
@@ -18,7 +18,7 @@ public class TVCR extends TV{
 
 }
 
-class TV{
+class TV00{
 	boolean power;
 	int channel;
 	
