@@ -19,6 +19,10 @@ public class StringBufferEx1 {
 //		연달아 해도 된다!!
 		System.out.println("s.append(\"asdf\").append(\"6666\") :: "+s.append("asdf").append("6666"));
 		
+		StringBuffer ss = new StringBuffer(10);
+		System.out.println(ss.length());
+		System.out.println(ss.capacity());
+		
 	}
 
 }
