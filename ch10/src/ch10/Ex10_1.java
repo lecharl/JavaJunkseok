@@ -16,7 +16,7 @@ public class Ex10_1 {
 		System.out.println("일2 "+today.get(Calendar.DAY_OF_MONTH));
 		System.out.println("연 기준 일 "+today.get(Calendar.DAY_OF_YEAR));
 		System.out.println("요일(1일~7토) "+today.get(Calendar.DAY_OF_WEEK));	//1~7 -> 일~토
-		System.out.println("??이달의 몇째 요일?? "+today.get(Calendar.DAY_OF_WEEK_IN_MONTH));	//??????????????????????
+		System.out.println("이달의 몇째 요일 "+today.get(Calendar.DAY_OF_WEEK_IN_MONTH));	//??????????????????????
 		
 		System.out.println("am0, pm1 "+today.get(Calendar.AM_PM));
 		System.out.println("시(0~11) "+today.get(Calendar.HOUR));
