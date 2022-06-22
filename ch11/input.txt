@@ -1,0 +1,4 @@
+#This is comment..
+#Wed Jun 22 15:20:49 KST 2022
+data=9,1,5,2,8,13,26,11,35,1
+name=Seong Namkung

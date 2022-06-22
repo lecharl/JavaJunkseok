@@ -1,0 +1,5 @@
+#commmmmmment
+#Wed Jun 22 14:38:58 KST 2022
+autosave=5
+language=\uD55C\uAE00
+timeout=10
