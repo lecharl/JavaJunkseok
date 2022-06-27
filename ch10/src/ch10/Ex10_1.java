@@ -1,11 +1,14 @@
 package ch10;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Ex10_1 {
 
 	public static void main(String[] args) {
 		Calendar today = Calendar.getInstance();	//추상클래스이기 때문에 직접 객체를 생성하지 못한다.
+		System.out.println(today.toString());
 		System.out.println("연 "+today.get(Calendar.YEAR));
 		System.out.println("월(0~11) "+today.get(Calendar.MONTH));	//0~11 -> 1월~12월
 		System.out.println("일 "+today.get(Calendar.DATE));
@@ -29,6 +32,19 @@ public class Ex10_1 {
 //		천분의 1초를 1시간으로 표시하기 위해 3600*1000 으로 나누기 
 		System.out.println("???? TimeZone(-12~ +12) "+(today.get(Calendar.ZONE_OFFSET))/(60*60*1000));
 		System.out.println("이 달의 마지막 날 "+today.getActualMaximum(Calendar.DATE));
+		
+		SimpleDateFormat sdf1 = new SimpleDateFormat("YYYY-MM-dd");
+		SimpleDateFormat sdf11 = new SimpleDateFormat("HH:mm:ss");
+		Date d1 = new Date();	
+		System.out.println(d1);
+		System.out.println(sdf1.format(d1));
+		System.out.println(sdf11.format(d1));
+		
+		Calendar c1 = Calendar.getInstance();
+		System.out.println(c1.getTime());	//c1.getTime() :: Date
+		System.out.println(sdf1.format(c1.getTime())); 
+		System.out.println(sdf11.format(c1.getTime())); 
+		
 
 	}
 
