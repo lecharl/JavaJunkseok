@@ -1,6 +1,6 @@
-package cmm.cmm1000.web;
+package com;
 
-public class Cmm1000FrontController {
+public class FrontController {
 	//HandlerMapping 에서 매치되면 해당 컨트롤러 가져오기
 	private HandlerMapping hMapping;
 	public FrontController() {

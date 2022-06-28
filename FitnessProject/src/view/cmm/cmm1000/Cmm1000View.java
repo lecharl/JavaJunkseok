@@ -2,46 +2,61 @@ package view.cmm.cmm1000;
 
 import java.util.Scanner;
 
-import cmm.cmm1000.web.Cmm1000FrontController;
+import com.FrontController;
+
+import view.usr.usr1000.Usr1000View;
 
 public class Cmm1000View {
-	Cmm1000FrontController frCtrl = new Cmm1000FrontController();
+	FrontController frCtrl = new FrontController();
 	Scanner sc = new Scanner(System.in);
 	String request = "";	//사용자 요청
 	
 	//메뉴 루프 돌리기
 	public void menuLoop() {
 		while(true) {
-			showBigMenu();
-			String inputBig = sc.next();
-			switch (inputBig) {
-			case "1":
-				showUsrMenu();
+			selectCmm1000View();
+			String inputNum = sc.next();
+			switch (inputNum) {
+			case "11":
+				new Usr1000View().selectUsr1000View();
+//				showUsrMenu();
 				break;
-			case "2":
+			case "12":
 				showLckMenu();
 				break;
-			case "3":
-				showSumMenu();
+			case "13":
+				showChtMenu();
 				break;
 			case "0":
 				System.out.print("프로그램을 종료합니다.");
 				System.exit(0);
 				break;
 			default:
-				System.out.println("big번호를 다시 입력해주세요.");
+				System.out.println("메뉴의 번호를 다시 입력해주세요.");
 				continue;
 			}//switch end
 		}//while end
 	}
 
 	//대메뉴 출력
-	public void showBigMenu() {
+	public void selectCmm1000View() {
 		System.out.println("\n[헬스장관리 프로젝트]");
 		System.out.println("[메뉴]");
-		System.out.println("1. 회원 관리 \t 2. 사물함 관리 \t 3. 통계 \t 0. 종료");
-		System.out.print("선택할 메뉴의 번호를 입력하세요. (예: 회원 관리 :: 1) >> ");
+		System.out.println("1. 회원 관리");
+		System.out.println("1-1) 회원 조회 \t 1-2) 회원 추가 \t 1-3) 회원 수정 \t 1-4) 회원 삭제\n");
+		System.out.println("2. 사물함 관리");
+		System.out.println("2-1) 사물함 조회 \t 2-2) 사물함 추가 \t 2-3) 사물함 수정 \t 2-4) 사물함 삭제\n");
+		System.out.println("3. 통계");
+		System.out.println("3-1) 회원 통계 \t 3-2) 회원 목록\n");
+		System.out.println("0. 종료");
+		System.out.print("선택할 메뉴의 번호를 입력하세요. (예: 회원 추가 :: 12, 종료 :: 0) >> ");
 	}
+//	public void selectCmm1000View() {
+//		System.out.println("\n[헬스장관리 프로젝트]");
+//		System.out.println("[메뉴]");
+//		System.out.println("1. 회원 관리 \t 2. 사물함 관리 \t 3. 통계 \t 0. 종료");
+//		System.out.print("선택할 메뉴의 번호를 입력하세요. (예: 회원 관리 :: 1) >> ");
+//	}
 	
 	//회원 관리 소메뉴 출력
 	public void showUsrMenu() {
@@ -132,7 +147,7 @@ public class Cmm1000View {
 	}
 	
 	//통계 소메뉴 출력
-	public void showSumMenu() {
+	public void showChtMenu() {
 		while(true) {
 			System.out.println("\n[통계]");
 			System.out.println("1. 회원 통계 \t 2. 회원 목록 \t 5.뒤로 \t 0.종료");

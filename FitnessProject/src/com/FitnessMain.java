@@ -1,4 +1,4 @@
-package cmm.cmm1000;
+package com;
 
 import view.cmm.cmm1000.Cmm1000View;
 

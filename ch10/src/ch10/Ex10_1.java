@@ -34,7 +34,7 @@ public class Ex10_1 {
 		System.out.println("이 달의 마지막 날 "+today.getActualMaximum(Calendar.DATE));
 		
 		SimpleDateFormat sdf1 = new SimpleDateFormat("YYYY-MM-dd");
-		SimpleDateFormat sdf11 = new SimpleDateFormat("HH:mm:ss");
+		SimpleDateFormat sdf11 = new SimpleDateFormat("YYYY-MM-dd 00:00:00");
 		Date d1 = new Date();	
 		System.out.println(d1);
 		System.out.println(sdf1.format(d1));
