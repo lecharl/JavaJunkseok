@@ -15,13 +15,13 @@ public interface Usr1000Dao {
 //	Usr1000Vo selectUsr1000(Usr1000Vo usrVo);
 	
 	//회원 추가
-	int insertUsr1000(Usr1000Vo usrVo);
+	int insertUsr1001(Usr1000Vo usrVo);
 //	
 //	//회원 수정
-//	int updateUsr1000(Usr1000Vo updatedUsrVo);
+//	int updateUsr1002(Usr1000Vo updatedUsrVo);
 //	
 //	//회원 삭제
-	int deleteUsr(String usrId);
+	int deleteUsr1003(String usrId);
 //	
 //	//상태 업데이트
 //	int updateUsrStts(String usrStatus);

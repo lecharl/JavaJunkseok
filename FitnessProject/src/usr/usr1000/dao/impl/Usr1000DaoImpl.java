@@ -44,36 +44,37 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 		usrMaplist.add(usrMap);
 	}
 
-//	회원이 있는지 알아내는 메서드는 서비스로 분리하자@@@@@@
-	
+//	아래 메서드는 나중에 삭제ㅔㅔㅔㅔ
 	@Override
 	public boolean existUsr1000(HashMap<String, Usr1000Vo> hmap, String usrId) {
 		//id가 존재하면서 사용유무 == "Y"인 경우 true
 		return (hmap.containsKey(usrId) && hmap.get(usrId).getUseYn() == "Y")? true : false;
 	}
 
-	//회원 조회/ 추가, 수정 및 삭제하기 전에 사전 검사
+	//회원 조회(가, 수정 및 삭제하기 전에 사전 검사)
 	@Override
 	public Usr1000Vo selectUsr1000(String usrId) {
 		List<Map<String, Usr1000Vo>> showList = usrMaplist;
-		final int listSize = showList.size();
+		final int LIST_SIZE = showList.size();
 		Usr1000Vo returnVo = null;
-		for(int i=0; i<listSize; i++) {
+		for(int i=0; i<LIST_SIZE; i++) {
 			HashMap<String, Usr1000Vo> hMap = new HashMap<String, Usr1000Vo>(showList.get(i));
 			//회원이 없을 경우 null 반환
 			if(!existUsr1000(hMap, usrId)) {
-				returnVo = null;
+//				returnVo = null;
+				continue;
 			//회원이 있을 경우 vo 반환
 			}else {
 				returnVo = hMap.get(usrId);
+				break;
 			}
 		}
 		return returnVo;
 	}
 
-	//회원 추가 - 서비스에서 회원 조회 후
+	//회원 추가 <- 서비스에서 회원 조회 후
 	@Override
-	public int insertUsr1000(Usr1000Vo usrVo) {
+	public int insertUsr1001(Usr1000Vo usrVo) {
 //		//회원이 있을 경우 -1 반환
 //		if(usrMap.containsKey(usrVo.getUsrId())) {
 //			return -1;
@@ -87,18 +88,18 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 	//회원 수정 - 서비스에서 회원 조회 후
 	//id를 제외 후 기존정보를 보여주고 나서
 //	@Override
-//	public int updateUsr1000(Usr1000Vo updatedUsrVo) {	//id를 제외한 새정보를 넘겨받음
+//	public int updateUsr1002(Usr1000Vo updatedUsrVo) {	//id를 제외한 새정보를 넘겨받음
 //		//회원이 있을 경우 정보 수정 :: id로 기존vo를 가져와서 setter(새vo.getter()) 
 //		Usr1000Vo oldUsrVo = usrMap.get(updatedUsrVo.getUsrId());
 //		return 0;
 //	}
 	
-	//회원 삭제 - 서비스에서 회원 조회 후
+	//회원 삭제 <- 서비스에서 회원 조회 후
 	@Override
-	public int deleteUsr(String usrId) {
+	public int deleteUsr1003(String usrId) {
 		//사용 유무 = "N" 로 변경
 		usrMap.get(usrId).getUseYn();
-		return 0;
+		return 1;
 	}
 
 	

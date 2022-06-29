@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import usr.usr1000.vo.Usr1000Vo;
+import usr.usr1000.web.Usr1000Controller;
 
 /*
  * 회원 추가
@@ -14,6 +15,7 @@ import usr.usr1000.vo.Usr1000Vo;
 
 public class Usr1001View {
 	Scanner sc = new Scanner(System.in);
+	Usr1000Controller controller = new Usr1000Controller();
 	//날짜 포맷 2가지
 	SimpleDateFormat yMDFormat = new SimpleDateFormat("YYYY-MM-DD");
 	SimpleDateFormat dateTimeFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
@@ -41,7 +43,6 @@ public class Usr1001View {
 					continue;
 				//유효하면 추가하기
 				}else {
-//				컨트롤러~
 					System.out.println("\n회원ID : "+inputId);
 					System.out.print("회원명 : ");
 					String inputName = sc.nextLine();
@@ -56,18 +57,22 @@ public class Usr1001View {
 					System.out.print("만료 일자(YYYY-MM-dd) : ");
 					String inputUsrExpireDate = sc.nextLine();
 //					더블체크????
-					//vo를 생성해 담아서 보내기~
-					HashMap<String, Usr1000Vo> newUsrMap = new HashMap<String, Usr1000Vo>();
-					Usr1000Vo newUsrVo = new Usr1000Vo.Builder(inputId, inputName, inputGender, inputPhoneNum, inputAddresss, inputDetail)
-							.joinDate(yMDFormat.format(nowCal))
-							.usrExpireDate(inputUsrExpireDate)
-							.enrollTime(dateTimeFormat.format(nowCal))
-							.editTime(dateTimeFormat.format(nowCal))
-							.build();
-					newUsrMap.put(inputId, newUsrVo);
-					System.out.println("회원 등록이 정상적으로 완료되었습니다.");
-				}
-			}
+					if(!dblCheck1001View()) {
+						return;
+					//더블체크 통과하면 회원 추가 후, 반복문 돌기
+					}else {
+//						컨트롤러~~
+						Usr1000Vo newUsrVo = new Usr1000Vo.Builder(inputId, inputName, inputGender, inputPhoneNum, inputAddresss, inputDetail)
+								.joinDate(yMDFormat.format(nowCal))
+								.usrExpireDate(inputUsrExpireDate)
+								.enrollTime(dateTimeFormat.format(nowCal))
+								.editTime(dateTimeFormat.format(nowCal))
+								.build();
+						System.out.println(controller.insertUsr1001(newUsrVo));
+						continue;
+					}
+				}//유효하면 체크하기 else end
+			}//유효성 체크 else end
 		}//while end
 		
 	}//insertUsr1001View() end
@@ -77,4 +82,11 @@ public class Usr1001View {
 		//알파벳 소문자 최소한 1개 이상, 숫자 최소한 1개 이상으로 이루어진 최소 5자리
 		return Pattern.matches("^(?=.*[a-z])(?=.*\\d)[a-z\\d]{5,}$", inputId);
 	}//validUsr1001View() end
+	
+	//더블 체크
+	public boolean dblCheck1001View() {
+		System.out.print("정말로 등록하시겠습니까? (Y/N) >> ");
+		String inputYn = sc.nextLine();
+		return ("Y".equalsIgnoreCase(inputYn))? true : false;
+	}//dblCheck1001View() end
 }

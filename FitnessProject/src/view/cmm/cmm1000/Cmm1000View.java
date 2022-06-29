@@ -7,7 +7,7 @@ import com.FrontController;
 import view.usr.usr1000.Usr1000View;
 
 public class Cmm1000View {
-	FrontController frCtrl = new FrontController();
+	FrontController frontController = new FrontController();
 	Scanner sc = new Scanner(System.in);
 	String request = "";	//사용자 요청
 	
@@ -15,26 +15,39 @@ public class Cmm1000View {
 	public void menuLoop() {
 		while(true) {
 			selectCmm1000View();
-			String inputNum = sc.next();
-			switch (inputNum) {
-			case "11":
-				new Usr1000View().selectUsr1000View();
-//				showUsrMenu();
-				break;
-			case "12":
-				showLckMenu();
-				break;
-			case "13":
-				showChtMenu();
-				break;
-			case "0":
+			String inputNum = sc.nextLine();
+			//inputNum = 0,11,12,13,14,21,22,23,24,31,32, 그외
+			String request = String.valueOf((Integer.valueOf(inputNum)-1));
+			//10,11,12,13 20,21,22,23 30,31
+			if("0".equals(inputNum)) {
 				System.out.print("프로그램을 종료합니다.");
 				System.exit(0);
-				break;
-			default:
+			}
+			if(frontController.selectMapList().indexOf(request) != -1){	
+				frontController.selectController(request);
+			}else {
 				System.out.println("메뉴의 번호를 다시 입력해주세요.");
 				continue;
-			}//switch end
+			}
+//			switch (inputNum) {
+//			case "11":
+//				new Usr1000View().selectUsr1000View();
+////				showUsrMenu();
+//				break;
+//			case "12":
+//				showLckMenu();
+//				break;
+//			case "13":
+//				showChtMenu();
+//				break;
+//			case "0":
+//				System.out.print("프로그램을 종료합니다.");
+//				System.exit(0);
+//				break;
+//			default:
+//				System.out.println("메뉴의 번호를 다시 입력해주세요.");
+//				continue;
+//			}//switch end
 		}//while end
 	}
 
