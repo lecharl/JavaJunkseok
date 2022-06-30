@@ -1,8 +1,10 @@
 package ch10;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Ex10_1 {
 
@@ -33,7 +35,7 @@ public class Ex10_1 {
 		System.out.println("???? TimeZone(-12~ +12) "+(today.get(Calendar.ZONE_OFFSET))/(60*60*1000));
 		System.out.println("이 달의 마지막 날 "+today.getActualMaximum(Calendar.DATE));
 		
-		SimpleDateFormat sdf1 = new SimpleDateFormat("YYYY-MM-dd");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat sdf11 = new SimpleDateFormat("YYYY-MM-dd 00:00:00");
 		Date d1 = new Date();	
 		System.out.println(d1);
@@ -41,9 +43,33 @@ public class Ex10_1 {
 		System.out.println(sdf11.format(d1));
 		
 		Calendar c1 = Calendar.getInstance();
+		Calendar c2 = Calendar.getInstance();
 		System.out.println(c1.getTime());	//c1.getTime() :: Date
 		System.out.println(sdf1.format(c1.getTime())); 
-		System.out.println(sdf11.format(c1.getTime())); 
+		System.out.println(sdf11.format(c1.getTime()));
+		
+		String newcal = sdf1.format(c1.getTime());
+		String mycal = "2022-06-30";
+		System.out.println("newcal = "+newcal);
+		System.out.println("mycal = "+mycal);
+		try {
+			Date date1 = sdf1.parse(newcal);
+			System.out.println("date1: "+date1);
+			Date mydate = sdf1.parse(mycal);
+			System.out.println("mydate: "+mydate);
+			c2.setTime(date1);
+		} catch (ParseException e) {
+			System.out.println("dddd");
+		}
+		System.out.println("out: "+c2.getTime().toString());
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.print("기존 : "+newcal+" >> ");
+		String inputStr = sc.nextLine();
+		if("".equals(inputStr)) {
+			inputStr = newcal;
+		}
+		System.out.println("새로 : "+inputStr);
 		
 
 	}

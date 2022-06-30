@@ -13,10 +13,10 @@ public class Usr1003View {
 	Scanner sc = new Scanner(System.in);
 	Usr1000Controller controller = new Usr1000Controller();
 	
-	public void deleteUsr1003View() {
-		System.out.println("\n[회원 삭제]");
+	public void selectUsr1003View() throws Exception {
+		System.out.println("\n[회원 삭제]======================================================================");
 		while(true) {
-			System.out.print("삭제할 회원의 ID를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
+			System.out.print("* 삭제할 회원의 ID를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
 			String inputId = sc.nextLine();
 			//메뉴 이동 먼저
 			if("999".equals(inputId)) {
@@ -26,7 +26,7 @@ public class Usr1003View {
 				System.exit(0);
 			//회원 삭제
 			}else {
-//				더블 체크
+//				더블체크
 				if(!dblCheck1003View()) {
 					return;
 				//더블체크 통과하면 회원 삭제 후, 반복문 돌기

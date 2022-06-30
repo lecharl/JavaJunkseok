@@ -2,6 +2,6 @@ package com;
 
 public interface ComController {
 
-	void selectView(String request);
+	void selectView(String request) throws Exception;
 
 }

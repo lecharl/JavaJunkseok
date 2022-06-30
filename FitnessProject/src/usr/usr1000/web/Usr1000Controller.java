@@ -1,5 +1,7 @@
 package usr.usr1000.web;
 
+import java.util.List;
+
 import com.ComController;
 
 import usr.usr1000.service.Usr1000Service;
@@ -16,62 +18,51 @@ public class Usr1000Controller implements ComController {
 //	void 도
 	
 	@Override
-	public void selectView(String request) {	//10,11,12,13, 나머지 에러는 view에서 잡아줬나?
+	public void selectView(String request) throws Exception {	//10,11,12,13, 나머지 에러는 view에서 잡아줬나?
 		char tailRequest = request.charAt(1);
 		switch (tailRequest) {
 		case '0':
-			new Usr1000View().selectUsr1000View();;
+			new Usr1000View().selectUsr1000View();
 			break;
 		case '1':
-			new Usr1001View();
+			new Usr1001View().selectUsr1001View();
 			break;
 		case '2':
-			new Usr1002View();
+			new Usr1002View().selectUsr1002View();
 			break;
 		case '3':
-			new Usr1003View();
+			new Usr1003View().selectUsr1003View();
 			break;
 		default:
 			break;
 		}
 	}
 	
-	//회원 조회 요청,, void??
-	public Usr1000Vo selectUsr1000(String usrId) {
+	//회원 조회
+	public Usr1000Vo selectUsr1000(String usrId)  throws Exception{
 		return usr1000Service.selectUsr1000(usrId);
-//		Usr1000Vo returnVo = usr1000Service.selectUsr1000(usrId);
-//		//없으면(null) ..뭐하지?
-//		if(returnVo == null) {
-//			//"해당 회원이 존재하지 않습니다."
-//		//있으면(vo)
-//		}else {
-//			//"조회 결과 입니다."
-//		}
 	}
 	
-	//회원 추가 요청
-	public String insertUsr1001(Usr1000Vo usrVo) {
+	//회원 추가
+	public String insertUsr1001(Usr1000Vo usrVo)  throws Exception{
 		int result = usr1000Service.insertUsr1001(usrVo);
 		//추가 성공하면(1 반환)
-		if(result == 1) {
-			return "회원 등록이 정상적으로 완료되었습니다.";
 		//추가 실패하면(-1 반환)
-		}else {
-			return "회원 등록에 실패하였습니다.";
-		}
+		return (result == 1)? "회원 등록에 성공하였습니다." : "회원 등록에 실패하였습니다.";
 	}
 	
 	//회원 수정
+	public String updateUsr1002(List<String> newList, String usrId)  throws Exception{
+		int result = usr1000Service.updateUsr1002(newList, usrId);
+		//수정 성공하면(7 반환)
+		return (result == 7)? "회원 수정에 성공하였습니다." : "회원 수정에 실패하였습니다.";
+	}
 
 	//회원 삭제
-	public String deleteUsr1003(String usrId) {
+	public String deleteUsr1003(String usrId)  throws Exception{
 		int result = usr1000Service.deleteUsr1003(usrId);
 		//삭제 성공하면(1 반환)
-		if(result == 1) {
-			return "회원 삭제가 정상적으로 완료되었습니다.";
 		//삭제 실패하면(-1 반환)
-		}else {
-			return "회원 삭제에 실패하였습니다.";
-		}
+		return (result == 1)? "회원 삭제에 성공하였습니다." : "회원 삭제에 실패하였습니다.";
 	}
 }

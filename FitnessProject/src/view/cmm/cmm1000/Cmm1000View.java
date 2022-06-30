@@ -12,13 +12,19 @@ public class Cmm1000View {
 	String request = "";	//사용자 요청
 	
 	//메뉴 루프 돌리기
-	public void menuLoop() {
+	public void menuLoop() throws Exception {
 		while(true) {
 			selectCmm1000View();
-			String inputNum = sc.nextLine();
+			String inputNum = sc.nextLine().trim();
 			//inputNum = 0,11,12,13,14,21,22,23,24,31,32, 그외
-			String request = String.valueOf((Integer.valueOf(inputNum)-1));
-			//10,11,12,13 20,21,22,23 30,31
+			String request = "";
+			try {
+				request = String.valueOf((Integer.valueOf(inputNum)-1));
+				//request = 0,10,11,12,13 20,21,22,23 30,31, 그외는 예외처리
+			} catch (NumberFormatException e) {
+				System.out.println("메뉴의 번호를 다시 입력해주세요.");
+				continue;
+			}
 			if("0".equals(inputNum)) {
 				System.out.print("프로그램을 종료합니다.");
 				System.exit(0);
@@ -26,8 +32,8 @@ public class Cmm1000View {
 			if(frontController.selectMapList().indexOf(request) != -1){	
 				frontController.selectController(request);
 			}else {
-				System.out.println("메뉴의 번호를 다시 입력해주세요.");
-				continue;
+				System.out.println("메뉴의 번호를 다시 입력해주세요ㅇㅇㅇ.");
+//				continue;
 			}
 //			switch (inputNum) {
 //			case "11":
@@ -53,7 +59,7 @@ public class Cmm1000View {
 
 	//대메뉴 출력
 	public void selectCmm1000View() {
-		System.out.println("\n[헬스장관리 프로젝트]");
+		System.out.println("\n*--*--*--*--*--*--*--*--*--*--*--*--[헬스장관리 프로젝트]--*--*--*--*--*--*--*--*--*--*--*--*");
 		System.out.println("[메뉴]");
 		System.out.println("1. 회원 관리");
 		System.out.println("1-1) 회원 조회 \t 1-2) 회원 추가 \t 1-3) 회원 수정 \t 1-4) 회원 삭제\n");

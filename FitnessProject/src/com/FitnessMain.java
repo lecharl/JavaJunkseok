@@ -1,10 +1,8 @@
 package com;
 
-import view.cmm.cmm1000.Cmm1000View;
-
 public class FitnessMain {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		FrontController frontController = new FrontController();
 		String request = "00";
 		frontController.selectController(request);

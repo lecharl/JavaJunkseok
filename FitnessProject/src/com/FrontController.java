@@ -38,7 +38,7 @@ public class FrontController {
 	}
 	
 	//
-	public void selectController(String request) {
+	public void selectController(String request) throws Exception {
 //		String headRequest = String.valueOf(request.charAt(0));
 		ComController controller = mappingMap.get(request);
 		controller.selectView(request);

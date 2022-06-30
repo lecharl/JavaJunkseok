@@ -17,16 +17,16 @@ public class Usr1001View {
 	Scanner sc = new Scanner(System.in);
 	Usr1000Controller controller = new Usr1000Controller();
 	//날짜 포맷 2가지
-	SimpleDateFormat yMDFormat = new SimpleDateFormat("YYYY-MM-DD");
-	SimpleDateFormat dateTimeFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+	SimpleDateFormat yMDFormat = new SimpleDateFormat("yyyy-MM-DD");
+	SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	//날짜
-	Calendar nowCal = Calendar.getInstance();
+	Calendar nowCal;
 
-	public void insertUsr1001View() {
-		System.out.println("\n[회원 추가]");
+	public void selectUsr1001View()  throws Exception{
+		System.out.println("\n[회원 추가]======================================================================");
 		while(true) {
-			System.out.println("추가할 회원의 ID를 입력합니다.");
-			System.out.print("알파벳 소문자와 숫자가 각각 최소 1개 이상인 최소 5자리를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
+			System.out.println("* 추가할 회원의 ID를 입력합니다.");
+			System.out.print("* 알파벳 소문자와 숫자가 각각 최소 1개 이상인 최소 5자리를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
 			String inputId = sc.nextLine();
 			
 			//메뉴 이동 먼저
@@ -43,7 +43,7 @@ public class Usr1001View {
 					continue;
 				//유효하면 추가하기
 				}else {
-					System.out.println("\n회원ID : "+inputId);
+					System.out.println("\n회원 ID : "+inputId);
 					System.out.print("회원명 : ");
 					String inputName = sc.nextLine();
 					System.out.print("회원 성별 : ");
@@ -54,25 +54,26 @@ public class Usr1001View {
 					String inputAddresss = sc.nextLine();
 					System.out.print("회원 설명 : ");
 					String inputDetail = sc.nextLine();
-					System.out.print("만료 일자(YYYY-MM-dd) : ");
+					System.out.print("만료 일자(yyyy-MM-dd) : ");
 					String inputUsrExpireDate = sc.nextLine();
 //					더블체크????
 					if(!dblCheck1001View()) {
 						return;
 					//더블체크 통과하면 회원 추가 후, 반복문 돌기
 					}else {
+						 nowCal = Calendar.getInstance();
 //						컨트롤러~~
 						Usr1000Vo newUsrVo = new Usr1000Vo.Builder(inputId, inputName, inputGender, inputPhoneNum, inputAddresss, inputDetail)
-								.joinDate(yMDFormat.format(nowCal))
+								.joinDate(yMDFormat.format(nowCal.getTime()))
 								.usrExpireDate(inputUsrExpireDate)
-								.enrollTime(dateTimeFormat.format(nowCal))
-								.editTime(dateTimeFormat.format(nowCal))
+								.enrollTime(dateTimeFormat.format(nowCal.getTime()))
+								.editTime(dateTimeFormat.format(nowCal.getTime()))
 								.build();
 						System.out.println(controller.insertUsr1001(newUsrVo));
 						continue;
 					}
 				}//유효하면 체크하기 else end
-			}//유효성 체크 else end
+			}//메뉴 이동 제외 else end
 		}//while end
 		
 	}//insertUsr1001View() end

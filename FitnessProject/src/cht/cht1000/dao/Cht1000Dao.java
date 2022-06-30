@@ -15,5 +15,5 @@ public interface Cht1000Dao {
 //	int countExpUsr(String stts);
 //	
 	//회원 목록
-	List<Usr1000Vo> selectUsr1000List();
+//	List<Usr1000Vo> selectUsr1000List();
 }

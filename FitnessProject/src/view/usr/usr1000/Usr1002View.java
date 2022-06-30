@@ -1,11 +1,15 @@
 package view.usr.usr1000;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 import usr.usr1000.vo.Usr1000Vo;
+import usr.usr1000.web.Usr1000Controller;
 
 /*
  * 회원 수정
@@ -13,16 +17,17 @@ import usr.usr1000.vo.Usr1000Vo;
 
 public class Usr1002View {
 	Scanner sc = new Scanner(System.in);
+	Usr1000Controller controller = new Usr1000Controller();
 	//날짜 포맷 2가지
-	SimpleDateFormat yMDFormat = new SimpleDateFormat("YYYY-MM-DD");
-	SimpleDateFormat dateTimeFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+	SimpleDateFormat yMDFormat = new SimpleDateFormat("yyyy-MM-DD");
+	SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	//날짜
 	Calendar nowCal = Calendar.getInstance();
 
-	public void updateUsr1002View() {
-		System.out.println("\n[회원 수정]");
+	public void selectUsr1002View() throws Exception {
+		System.out.println("\n[회원 수정]======================================================================");
 		while(true) {
-			System.out.println("수정할 회원의 ID를 입력합니다. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
+			System.out.println("* 수정할 회원의 ID를 입력합니다. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
 			String inputId = sc.nextLine();
 			
 			//메뉴 이동 먼저
@@ -31,43 +36,62 @@ public class Usr1002View {
 			}else if("0".equals(inputId)) {
 				System.out.println("프로그램을 종료합니다.");
 				System.exit(0);
-			//회원 조회로 존재 여부 확인
 			}else {
-				//존재하지 않으면(null) 반복문 계속
+				//회원 조회로 존재 여부 확인
 //				컨트롤러~ 회원 조회
-				if(!validUsr1001View(inputId)) {
+				Usr1000Vo returnVo = controller.selectUsr1000(inputId);
+				//회원 존재안하면 아래 출력 후, 반복문 돌기
+				if(returnVo == null) {
 					System.out.println("존재하지 않는 회원입니다.");
-					continue;
-//				존재하면 회원 조회로 vo가져와서 보여준 뒤 수정하기????
+//					continue;
 				}else {
-//				컨트롤러~
-					System.out.println("\n회원ID : "+inputId);
-					System.out.print("회원명 : ");
+					//존재하면 회원 조회로 vo가져와서 보여준 뒤 수정하기????
+//					System.out.println(returnVo);
+					System.out.println("\n- 회원ID : "+inputId);
+					System.out.print("- 회원명 : "+returnVo.getUsrName()+" >> ");
 					String inputName = sc.nextLine();
-					System.out.print("회원 성별 : ");
+					System.out.print("- 회원 성별 : "+returnVo.getUsrGender()+" >> ");
 					String inputGender = sc.nextLine();
-					System.out.print("회원 연락처 : ");
+					System.out.print("- 회원 연락처 : "+returnVo.getUsrPhoneNum()+" >> ");
 					String inputPhoneNum = sc.nextLine();
-					System.out.print("회원 주소 : ");
-					String inputAddresss = sc.nextLine();
-					System.out.print("회원 설명 : ");
+					System.out.print("- 회원 주소 : "+returnVo.getUsrAddress()+" >> ");
+					String inputAddress = sc.nextLine();
+					System.out.print("- 회원 설명 : "+returnVo.getUsrDetail()+" >> ");
 					String inputDetail = sc.nextLine();
-					System.out.print("만료 일자(YYYY-MM-dd) : ");
+					System.out.print("- 만료 일자(yyyy-MM-dd) : "+returnVo.getUsrExpireDate()+" >> ");
 					String inputUsrExpireDate = sc.nextLine();
-//					더블체크????
-					//vo를 생성해 담아서 보내기~
-					HashMap<String, Usr1000Vo> newUsrMap = new HashMap<String, Usr1000Vo>();
-					Usr1000Vo newUsrVo = new Usr1000Vo.Builder(inputId, inputName, inputGender, inputPhoneNum, inputAddresss, inputDetail)
-							.joinDate(yMDFormat.format(nowCal))
-							.usrExpireDate(inputUsrExpireDate)
-							.enrollTime(dateTimeFormat.format(nowCal))
-							.editTime(dateTimeFormat.format(nowCal))
-							.build();
-					newUsrMap.put(inputId, newUsrVo);
-					System.out.println("회원 등록이 정상적으로 완료되었습니다.");
-				}
-			}
+//					수정안하면 기존 정보로, 수정하면 수정한 거로 변경
+					List<String> newList = Arrays.asList(inputName, inputGender, inputPhoneNum, inputAddress, inputDetail, inputUsrExpireDate);
+					List<String> oldList = Arrays.asList(returnVo.getUsrName(), returnVo.getUsrGender(), returnVo.getUsrPhoneNum(), returnVo.getUsrAddress(), returnVo.getUsrDetail(), returnVo.getUsrExpireDate());
+					final int LIST_SIZE = newList.size();
+					for(int i=0; i<LIST_SIZE; i++) {
+						chgInput1002View(oldList.get(i), newList.get(i));
+					}
+//					더블체크
+					if(!dblCheck1002View()) {
+						return;
+					//더블체크 통과하면 회원 수정 후, 반복문 돌기
+					}else {
+//						컨트롤러~
+						System.out.println(controller.updateUsr1002(newList, inputId));
+					}
+				}//if returnVo 존재 여부 end 
+			}//if id정확히 입력 여부 end
 		}//while end
 		
 	}//updateUsr1002View() end
+	
+	//정보 바꾸기
+	private void chgInput1002View(String oldInfo, String newInfo) {
+		if("".equals(newInfo)) {
+			newInfo = oldInfo;
+		}
+	}//chgInput1002View() end
+	
+	//더블 체크
+	public boolean dblCheck1002View() {
+		System.out.print("정말로 삭제하시겠습니까? (Y/N) >> ");
+		String inputYn = sc.nextLine();
+		return ("Y".equalsIgnoreCase(inputYn))? true : false;
+	}//dblCheck1002View() end
 }

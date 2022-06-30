@@ -1,5 +1,16 @@
 package cht.cht1000.service;
 
-public interface Cht1000Service {
+import java.util.List;
 
+import usr.usr1000.vo.Usr1000Vo;
+
+public interface Cht1000Service {
+	//회원 수
+	int countCht1000() throws Exception;
+	
+	//임박, 만료 회원 수
+	int countCht1000Stt(String status) throws Exception;
+	
+	//회원 목록
+	List<Usr1000Vo> selectCht1001List() throws Exception;
 }

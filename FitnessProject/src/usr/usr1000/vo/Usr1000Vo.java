@@ -76,7 +76,7 @@ public class Usr1000Vo {
 			this.usrPhoneNum = usrPhoneNum;
 			this.usrAddress = usrAddress;
 			this.usrDetail = usrDetail;
-			this.usrStatus = "정산";
+			this.usrStatus = "정상";
 			this.useYn = "Y";
 			this.lckNo = "없음";
 		}
@@ -218,7 +218,7 @@ public class Usr1000Vo {
 		return "- 회원 ID : " + usrId + "\n- 회원명 : " + usrName + "\n- 회원 성별 : " + usrGender + "\n- 회원 연락처 : ="
 				+ usrPhoneNum + "\n- 회원 주소 : " + usrAddress + "\n- 회원 설명 : " + usrDetail + "\n- 회원 상태 : " + usrStatus
 				+ "\n- 가입 일자 : " + joinDate + "\n- 만료 일자 : " + usrExpireDate + "\n- 사용 유무 : " + useYn + "\n- 등록 일시 : "
-				+ enrollTime + "\n- 수정 일시 : " + editTime + "\n- 사물함 번호 : " + lckNo + "]";
+				+ enrollTime + "\n- 수정 일시 : " + editTime + "\n- 사물함 번호 : " + lckNo;
 	}
 	
 
