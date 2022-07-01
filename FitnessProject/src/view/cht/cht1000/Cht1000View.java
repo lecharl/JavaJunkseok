@@ -17,10 +17,10 @@ public class Cht1000View {
 	public void selectCht1000View()  throws Exception{
 		System.out.println("\n[회원 통계]======================================================================");
 //		컨트롤러
-		System.out.print("1) 회원 수 : "+controller.countCht1000()+"명");
+		System.out.println("1) 회원 수 : "+controller.countCht1000()+"명");
 //		컨트롤러
-		System.out.print("2) 임박 회원 수 : "+controller.countCht1000Stt("임박")+"명");
+		System.out.println("2) 임박 회원 수 : "+controller.countCht1000Stt("임박")+"명");
 //		컨트롤러
-		System.out.print("3) 만료 회원 수 : "+controller.countCht1000Stt("만료")+"명");
+		System.out.println("3) 만료 회원 수 : "+controller.countCht1000Stt("만료")+"명");
 	}
 }

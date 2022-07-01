@@ -16,8 +16,8 @@ public class Lck1000View {
 	public void selectLck1000View() {
 		System.out.println("\n[사물함 조회]======================================================================");
 		while(true) {
-			System.out.print("* 조회할 사물함의 번호(1~99) 또는 회원의 ID를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
-			String input = sc.nextLine();
+			System.out.print("\n* 조회할 사물함의 번호(1~99) 또는 회원의 ID를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
+			String input = sc.nextLine().trim();
 			//메뉴 이동 먼저
 			if("999".equals(input)) {
 				break;

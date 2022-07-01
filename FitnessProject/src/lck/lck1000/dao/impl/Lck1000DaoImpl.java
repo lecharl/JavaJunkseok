@@ -16,14 +16,23 @@ import usr.usr1000.vo.Usr1000Vo;
 
 public class Lck1000DaoImpl implements Lck1000Dao {
 	
+	private static Lck1000DaoImpl lck1000DaoInstance;
+	
+	private Lck1000DaoImpl() {}
+	
 	//사물함 정보를 담을 객체
-	Map<String, Lck1000Vo> lckMap;
+	private static Map<String, Lck1000Vo> lckMap;
 	//날짜 포맷 2가지
-	SimpleDateFormat yMDFormat = new SimpleDateFormat("yyyy-MM-DD");
+	SimpleDateFormat yMDFormat = new SimpleDateFormat("yyyy-MM-dd");
 	SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
-	public Lck1000DaoImpl() {
-		this.lckMap = new HashMap<String, Lck1000Vo>();
+	public static Lck1000DaoImpl getInstance() {
+		if(lckMap == null) {
+			lckMap = new HashMap<String, Lck1000Vo>();
+		}
+		if(lck1000DaoInstance == null) {
+			lck1000DaoInstance = new Lck1000DaoImpl();
+		}
 		//1~99, "", "2020-01-01"
 		for(int i=1; i<100; i++) {
 			Lck1000Vo vo;
@@ -34,6 +43,7 @@ public class Lck1000DaoImpl implements Lck1000Dao {
 			}
 			lckMap.put(i+"", vo);
 		}
+		return lck1000DaoInstance;
 	}
 
 	//사물함 조회
@@ -45,7 +55,7 @@ public class Lck1000DaoImpl implements Lck1000Dao {
 			//1~99를 입력했을 경우
 			if(1 <= Integer.valueOf(input) && Integer.valueOf(input) <= 99) {
 				//**만료일자 업뎃
-				updateLck1004UsrId(input);
+//				updateLck1004UsrId(input);
 				//만료되면(== 배정된 id 없음) 따로 하는 줄 알았는데 필요없네. 없는 채로 출력
 //				if(!"".equals(lckMap.get(input).getUsrId())) {
 					returnVo = lckMap.get(input);
@@ -57,7 +67,7 @@ public class Lck1000DaoImpl implements Lck1000Dao {
 				String key = ele.getKey();
 				Lck1000Vo val = ele.getValue();
 				//**만료일자 업뎃
-				updateLck1004UsrId(key);
+//				updateLck1004UsrId(key);
 				if(val.getUsrId().equals(input)) {
 					returnVo = val;
 				}
@@ -105,7 +115,7 @@ public class Lck1000DaoImpl implements Lck1000Dao {
 				result++;
 				targetVo.setLckExpireDate(newList.get(1));
 				result++;
-			//input이 id라면
+			//input이 id라면....아 id 체크를 했어야 했구나
 			}else if(targetVo.getUsrId().equals(input)) {
 				targetVo.setLckNo(newList.get(0));
 				result++;
@@ -114,8 +124,11 @@ public class Lck1000DaoImpl implements Lck1000Dao {
 			}
 			//수정일시 변경 set(현재시간)
 			nowCal = Calendar.getInstance();
+//			System.out.println(targetVo+"target");
 			Usr1000Vo usrVo = usr1000Dao.selectUsr1000(targetVo.getUsrId());
+//			System.out.println(usrVo+"ggg");
 			usrVo.setEditTime(dateTimeFormat.format(nowCal.getTime()));
+//			System.out.println(usrVo.getEditTime());
 			result++;
 			//**usrVo의 lckNo도 변경
 			usrVo.setLckNo(targetVo.getLckNo());
@@ -123,7 +136,7 @@ public class Lck1000DaoImpl implements Lck1000Dao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return result;
 	}
 
 	//사물함 삭제

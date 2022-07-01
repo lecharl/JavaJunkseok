@@ -4,11 +4,13 @@ import java.util.List;
 
 import cht.cht1000.service.Cht1000Service;
 import usr.usr1000.dao.Usr1000Dao;
+import usr.usr1000.dao.impl.Usr1000DaoImpl;
 import usr.usr1000.vo.Usr1000Vo;
 
 public class Cht1000ServiceImpl implements Cht1000Service{
 
-	private Usr1000Dao usr1000Dao;
+	private Usr1000Dao usr1000Dao = Usr1000DaoImpl.getInstance();
+	
 	//회원 수
 	@Override
 	public int countCht1000() throws Exception {

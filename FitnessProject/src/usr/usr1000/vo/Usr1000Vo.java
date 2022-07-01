@@ -215,7 +215,7 @@ public class Usr1000Vo {
 //		toString()
 	@Override
 	public String toString() {
-		return "- 회원 ID : " + usrId + "\n- 회원명 : " + usrName + "\n- 회원 성별 : " + usrGender + "\n- 회원 연락처 : ="
+		return "- 회원 ID : " + usrId + "\n- 회원명 : " + usrName + "\n- 회원 성별 : " + usrGender + "\n- 회원 연락처 : "
 				+ usrPhoneNum + "\n- 회원 주소 : " + usrAddress + "\n- 회원 설명 : " + usrDetail + "\n- 회원 상태 : " + usrStatus
 				+ "\n- 가입 일자 : " + joinDate + "\n- 만료 일자 : " + usrExpireDate + "\n- 사용 유무 : " + useYn + "\n- 등록 일시 : "
 				+ enrollTime + "\n- 수정 일시 : " + editTime + "\n- 사물함 번호 : " + lckNo;

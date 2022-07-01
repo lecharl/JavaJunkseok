@@ -16,8 +16,8 @@ public class Usr1003View {
 	public void selectUsr1003View() throws Exception {
 		System.out.println("\n[회원 삭제]======================================================================");
 		while(true) {
-			System.out.print("* 삭제할 회원의 ID를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
-			String inputId = sc.nextLine();
+			System.out.print("\n* 삭제할 회원의 ID를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
+			String inputId = sc.nextLine().trim();
 			//메뉴 이동 먼저
 			if("999".equals(inputId)) {
 				break;

@@ -5,13 +5,14 @@ import java.util.List;
 import com.ComController;
 
 import cht.cht1000.service.Cht1000Service;
+import cht.cht1000.service.impl.Cht1000ServiceImpl;
 import usr.usr1000.vo.Usr1000Vo;
 import view.cht.cht1000.Cht1000View;
 import view.cht.cht1000.Cht1001View;
 
 public class Cht1000Controller implements ComController {
 	
-	private Cht1000Service cht1000Service;
+	private Cht1000Service cht1000Service = new Cht1000ServiceImpl();
 
 	@Override
 	public void selectView(String request) throws Exception {

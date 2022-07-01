@@ -8,11 +8,12 @@ import lck.lck1000.service.Lck1000Service;
 import lck.lck1000.vo.Lck1000Vo;
 import usr.usr1000.dao.Usr1000Dao;
 import usr.usr1000.dao.impl.Usr1000DaoImpl;
+import usr.usr1000.vo.Usr1000Vo;
 
 public class Lck1000ServiceImpl implements Lck1000Service{
 	
-	private Lck1000Dao lck1000Dao = new Lck1000DaoImpl();
-	private Usr1000Dao usr1000Dao = new Usr1000DaoImpl();
+	private Lck1000Dao lck1000Dao = Lck1000DaoImpl.getInstance();
+	private Usr1000Dao usr1000Dao = Usr1000DaoImpl.getInstance();
 
 	//사물함 조회
 	@Override
@@ -40,9 +41,12 @@ public class Lck1000ServiceImpl implements Lck1000Service{
 		}
 	}
 	
-	//사물함 수정 <- 사물함 조회 후
+	//사물함 수정 <- id조회하고 사물함 조회 후
 	@Override
 	public int updateLck1002(List<String> newList, String input) {
+		//아예 메서드를 나눠야 겠다.
+		//id 조회
+		
 		//사물함 조회
 		Lck1000Vo returnVo = selectLck1000(input);
 		if(returnVo == null) {

@@ -5,6 +5,7 @@ import java.util.List;
 import com.ComController;
 
 import lck.lck1000.service.Lck1000Service;
+import lck.lck1000.service.impl.Lck1000ServiceImpl;
 import lck.lck1000.vo.Lck1000Vo;
 import view.lck.lck1000.Lck1000View;
 import view.lck.lck1000.Lck1001View;
@@ -13,7 +14,7 @@ import view.lck.lck1000.Lck1003View;
 
 public class Lck1000Controller implements ComController {
 	
-	private Lck1000Service lck1000Service;
+	private Lck1000Service lck1000Service = new Lck1000ServiceImpl();
 
 	@Override
 	public void selectView(String request) throws Exception {
@@ -69,7 +70,7 @@ public class Lck1000Controller implements ComController {
 	//사물함 삭제
 	public String deleteLck1003(String lckNo) {
 		int result = lck1000Service.deleteLck1003(lckNo);
-		//나중에 삼항연산자로 수정~~~~~~~~~~~~
+		//나중에 ~~~~~~~
 		String msg = "";
 		if(result == -1)
 			msg = "입력하신 사물함 번호는 사용자가 존재하지 않습니다. 다른 번호로 시도해주세요.";

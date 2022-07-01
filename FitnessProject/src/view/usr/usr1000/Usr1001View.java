@@ -17,7 +17,7 @@ public class Usr1001View {
 	Scanner sc = new Scanner(System.in);
 	Usr1000Controller controller = new Usr1000Controller();
 	//날짜 포맷 2가지
-	SimpleDateFormat yMDFormat = new SimpleDateFormat("yyyy-MM-DD");
+	SimpleDateFormat yMDFormat = new SimpleDateFormat("yyyy-MM-dd");
 	SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	//날짜
 	Calendar nowCal;
@@ -25,9 +25,9 @@ public class Usr1001View {
 	public void selectUsr1001View()  throws Exception{
 		System.out.println("\n[회원 추가]======================================================================");
 		while(true) {
-			System.out.println("* 추가할 회원의 ID를 입력합니다.");
+			System.out.println("\n* 추가할 회원의 ID를 입력합니다.");
 			System.out.print("* 알파벳 소문자와 숫자가 각각 최소 1개 이상인 최소 5자리를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
-			String inputId = sc.nextLine();
+			String inputId = sc.nextLine().trim();
 			
 			//메뉴 이동 먼저
 			if("999".equals(inputId)) {

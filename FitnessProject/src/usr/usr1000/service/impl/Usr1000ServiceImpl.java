@@ -9,7 +9,7 @@ import usr.usr1000.vo.Usr1000Vo;
 
 public class Usr1000ServiceImpl implements Usr1000Service {
 	
-	private Usr1000Dao usr1000Dao = new Usr1000DaoImpl() ;
+	private Usr1000Dao usr1000Dao = Usr1000DaoImpl.getInstance();
 	
 	//회원 조회
 	@Override

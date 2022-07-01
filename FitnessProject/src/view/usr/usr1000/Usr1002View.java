@@ -27,8 +27,8 @@ public class Usr1002View {
 	public void selectUsr1002View() throws Exception {
 		System.out.println("\n[회원 수정]======================================================================");
 		while(true) {
-			System.out.println("* 수정할 회원의 ID를 입력합니다. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
-			String inputId = sc.nextLine();
+			System.out.println("\n* 수정할 회원의 ID를 입력합니다. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
+			String inputId = sc.nextLine().trim();
 			
 			//메뉴 이동 먼저
 			if("999".equals(inputId)) {
@@ -63,17 +63,23 @@ public class Usr1002View {
 //					수정안하면 기존 정보로, 수정하면 수정한 거로 변경
 					List<String> newList = Arrays.asList(inputName, inputGender, inputPhoneNum, inputAddress, inputDetail, inputUsrExpireDate);
 					List<String> oldList = Arrays.asList(returnVo.getUsrName(), returnVo.getUsrGender(), returnVo.getUsrPhoneNum(), returnVo.getUsrAddress(), returnVo.getUsrDetail(), returnVo.getUsrExpireDate());
+					List<String> newList2 = new ArrayList<String>();
 					final int LIST_SIZE = newList.size();
 					for(int i=0; i<LIST_SIZE; i++) {
-						chgInput1002View(oldList.get(i), newList.get(i));
+						if(newList.get(i).length() == 0) {
+							newList2.add(oldList.get(i));
+						}else {
+							newList2.add(newList.get(i));
+						}
 					}
+//					System.out.println(newList2);
 //					더블체크
 					if(!dblCheck1002View()) {
 						return;
 					//더블체크 통과하면 회원 수정 후, 반복문 돌기
 					}else {
 //						컨트롤러~
-						System.out.println(controller.updateUsr1002(newList, inputId));
+						System.out.println(controller.updateUsr1002(newList2, inputId));
 					}
 				}//if returnVo 존재 여부 end 
 			}//if id정확히 입력 여부 end
@@ -81,16 +87,10 @@ public class Usr1002View {
 		
 	}//updateUsr1002View() end
 	
-	//정보 바꾸기
-	private void chgInput1002View(String oldInfo, String newInfo) {
-		if("".equals(newInfo)) {
-			newInfo = oldInfo;
-		}
-	}//chgInput1002View() end
 	
 	//더블 체크
 	public boolean dblCheck1002View() {
-		System.out.print("정말로 삭제하시겠습니까? (Y/N) >> ");
+		System.out.print("정말로 수정하시겠습니까? (Y/N) >> ");
 		String inputYn = sc.nextLine();
 		return ("Y".equalsIgnoreCase(inputYn))? true : false;
 	}//dblCheck1002View() end

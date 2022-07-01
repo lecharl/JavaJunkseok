@@ -16,8 +16,8 @@ public class Lck1003View {
 	public void selectLck1003View() {
 		System.out.println("\n[사물함 삭제]======================================================================");
 		while(true) {
-			System.out.print("* 삭제할 사물함의 번호(1~99)를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
-			String inputNo = sc.nextLine();
+			System.out.print("\n* 삭제할 사물함의 번호(1~99)를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
+			String inputNo = sc.nextLine().trim();
 			//메뉴 이동 먼저
 			if("999".equals(inputNo)) {
 				break;

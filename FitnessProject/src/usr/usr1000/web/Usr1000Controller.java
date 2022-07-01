@@ -5,6 +5,7 @@ import java.util.List;
 import com.ComController;
 
 import usr.usr1000.service.Usr1000Service;
+import usr.usr1000.service.impl.Usr1000ServiceImpl;
 import usr.usr1000.vo.Usr1000Vo;
 import view.usr.usr1000.Usr1000View;
 import view.usr.usr1000.Usr1001View;
@@ -13,9 +14,7 @@ import view.usr.usr1000.Usr1003View;
 
 public class Usr1000Controller implements ComController {
 
-	private Usr1000Service usr1000Service;
-//	static이 붙을지 안붙을지 고민해보자
-//	void 도
+	private Usr1000Service usr1000Service = new Usr1000ServiceImpl();
 	
 	@Override
 	public void selectView(String request) throws Exception {	//10,11,12,13, 나머지 에러는 view에서 잡아줬나?
@@ -48,7 +47,7 @@ public class Usr1000Controller implements ComController {
 		int result = usr1000Service.insertUsr1001(usrVo);
 		//추가 성공하면(1 반환)
 		//추가 실패하면(-1 반환)
-		return (result == 1)? "회원 등록에 성공하였습니다." : "회원 등록에 실패하였습니다.";
+		return (result == 1)? result+"회원 등록에 성공하였습니다." : result+"회원 등록에 실패하였습니다.";
 	}
 	
 	//회원 수정

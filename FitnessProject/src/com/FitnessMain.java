@@ -6,8 +6,6 @@ public class FitnessMain {
 		FrontController frontController = new FrontController();
 		String request = "00";
 		frontController.selectController(request);
-//		Cmm1000View view = new Cmm1000View();
-//		view.menuLoop();
 
 	}
 
