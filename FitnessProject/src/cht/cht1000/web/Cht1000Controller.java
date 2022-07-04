@@ -1,34 +1,22 @@
 package cht.cht1000.web;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 
 import com.ComController;
 
 import cht.cht1000.service.Cht1000Service;
 import cht.cht1000.service.impl.Cht1000ServiceImpl;
+import lck.lck1000.web.Lck1000Controller;
 import usr.usr1000.vo.Usr1000Vo;
-import view.cht.cht1000.Cht1000View;
-import view.cht.cht1000.Cht1001View;
+import usr.usr1000.web.Usr1000Controller;
 
 public class Cht1000Controller implements ComController {
 	
 	private Cht1000Service cht1000Service = new Cht1000ServiceImpl();
 
-	@Override
-	public void selectView(String request) throws Exception {
-		char tailRequest = request.charAt(1);
-		switch (tailRequest) {
-		case '0':
-			new Cht1000View().selectCht1000View();
-			break;
-		case '1':
-			new Cht1001View().selectCht1001View();
-			break;
-		default:
-			break;
-		}		
-	}
-	
 	//회원 수
 	public int countCht1000()  throws Exception{
 		return cht1000Service.countCht1000();
@@ -42,8 +30,100 @@ public class Cht1000Controller implements ComController {
 	//만료 회원 수
 	
 	//회원 목록
-	public List<Usr1000Vo> selectCht1001List() throws Exception{
+	public List<Map<String, String>> selectCht1001List() throws Exception{
 		return cht1000Service.selectCht1001List();
+	}
+
+	@Override
+	public void selectView(String request) {
+		try {
+			Class<?> cls = Class.forName(request);
+			Object obj = cls.newInstance();
+			Method m = cls.getDeclaredMethod("callView");
+			m.invoke(obj);
+		} catch (ClassNotFoundException e) {
+			System.out.println("cht컨 :: 뷰 클래스 못찾음");
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			System.out.println("cht컨 : invo");
+			e.getTargetException().printStackTrace();
+//			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public Object selectMethod(String request, Map<String, String> inputMap) {
+		Object obj = new Cht1000Controller();
+		Object newObj = null;
+		try {
+			Class<?> cls = Class.forName(obj.getClass().getName());
+//			Method m = cls.getDeclaredMethod(request, String.class);
+			Method m = cls.getMethod(request, Map.class);
+			newObj = m.invoke(obj, inputMap);
+		} catch (ClassNotFoundException e) {
+			System.out.println("cht컨트롤 :: 클래스 못찾음");
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			System.out.println("cht컨트롤 :: 메소드 못찾음sssss");
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			System.out.println("cht컨트롤 :: 보안??");
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.getTargetException().printStackTrace();
+			System.out.println("cht컨트롤 :: 존재하지 않는 사물입니다.");
+//			e.printStackTrace();
+		}
+		return newObj;		
+	}
+	
+	public Object selectMethod(String request) {
+		Object obj = new Lck1000Controller();
+		Object newObj = null;
+		try {
+			Class<?> cls = Class.forName(obj.getClass().getName());
+//			Method m = cls.getDeclaredMethod(request, String.class);
+			Method m = cls.getMethod(request);
+			newObj = m.invoke(obj);
+		} catch (ClassNotFoundException e) {
+			System.out.println("cht컨트롤 :: 클래스 못찾음");
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			System.out.println("cht컨트롤 :: 메소드 못찾음sssss");
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			System.out.println("cht컨트롤 :: 보안??");
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.getTargetException().printStackTrace();
+			System.out.println("cht컨트롤 :: 존재하지 않는 사뭃입니다.");
+//			e.printStackTrace();
+		}
+		return newObj;		
 	}
 
 }

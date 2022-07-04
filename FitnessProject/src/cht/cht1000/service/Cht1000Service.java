@@ -1,6 +1,7 @@
 package cht.cht1000.service;
 
 import java.util.List;
+import java.util.Map;
 
 import usr.usr1000.vo.Usr1000Vo;
 
@@ -12,5 +13,5 @@ public interface Cht1000Service {
 	int countCht1000Stt(String status) throws Exception;
 	
 	//회원 목록
-	List<Usr1000Vo> selectCht1001List() throws Exception;
+	List<Map<String, String>> selectCht1001List() throws Exception;
 }

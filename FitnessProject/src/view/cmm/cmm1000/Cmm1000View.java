@@ -2,17 +2,17 @@ package view.cmm.cmm1000;
 
 import java.util.Scanner;
 
+import com.ComController;
 import com.FrontController;
 
 import view.usr.usr1000.Usr1000View;
 
 public class Cmm1000View {
-	FrontController frontController = new FrontController();
+//	FrontController frnController;
 	Scanner sc = new Scanner(System.in);
-	String request = "";	//사용자 요청
 	
 	//메뉴 루프 돌리기
-	public void menuLoop() throws Exception {
+	public void menuLoop() {
 		while(true) {
 			selectCmm1000View();
 			String inputNum = sc.nextLine().trim();
@@ -29,12 +29,30 @@ public class Cmm1000View {
 				System.out.print("프로그램을 종료합니다.");
 				System.exit(0);
 			}
-			if(frontController.selectMapList().indexOf(request) != -1){	
-				frontController.selectController(request);
-			}else {
+			String chgRequest = changeToClsName(request);
+			ComController comController = FrontController.selectMapping(chgRequest);
+			try {
+				comController.selectView(chgRequest);
+			}catch (Exception e) {
 				System.out.println("메뉴의 번호를 다시 입력해주세요ㅇㅇㅇ.");
+				e.printStackTrace();
 			}
-//			switch (inputNum) {
+			
+//			if(comController == null) {
+//				continue;
+//			}
+//			ComController comController = (ComController) FrontController.selectMapping(request);
+//			try {
+//				if(comController != null) {
+//					comController.selectView(request);
+//				}
+//			}catch (NullPointerException e) {
+//				e.printStackTrace();
+//			}
+			
+//			if(frontController.selectMapList().indexOf(request) != -1){	
+//				frontController.selectController(request);
+//			}
 		}//while end
 	}
 
@@ -50,6 +68,47 @@ public class Cmm1000View {
 		System.out.println("3-1) 회원 통계 \t 3-2) 회원 목록\n");
 		System.out.println("0. 종료");
 		System.out.print("선택할 메뉴의 번호를 입력하세요. (예: 회원 추가 :: 12, 종료 :: 0) >> ");
+	}
+	
+	//request -> 클래스이름으로 바꾸기
+	public String changeToClsName(String request) {
+		String clsName = "";
+		switch (request) {
+		case "10":
+			clsName = "view.usr.usr1000.Usr1000View";
+			break;
+		case "11":
+			clsName = "view.usr.usr1000.Usr1001View";
+			break;
+		case "12":
+			clsName = "view.usr.usr1000.Usr1002View";
+			break;
+		case "13":
+			clsName = "view.usr.usr1000.Usr1003View";
+			break;
+		case "20":
+			clsName = "view.lck.lck1000.Lck1000View";
+			break;
+		case "21":
+			clsName = "view.lck.lck1000.Lck1001View";
+			break;
+		case "22":
+			clsName = "view.lck.lck1000.Lck1002View";
+			break;
+		case "23":
+			clsName = "view.lck.lck1000.Lck1003View";
+			break;
+		case "30":
+			clsName = "view.cht.cht1000.Cht1000View";
+			break;
+		case "31":
+			clsName = "view.cht.cht1000.Cht1001View";
+			break;
+		default:
+			System.out.println("다시입ㄹ격ㄱㄱ");
+			break;
+		}
+		return clsName;
 	}
 	
 }

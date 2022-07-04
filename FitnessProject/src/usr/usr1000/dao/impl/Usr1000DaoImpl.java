@@ -34,24 +34,24 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 	public static Usr1000DaoImpl getInstance() {
 		if(usrMap == null) {
 			usrMap = new HashMap<String, Usr1000Vo>(); 
+			Usr1000Vo vo1 = new Usr1000Vo.Builder("lsy9680", "ㅇㅅㅇ", "여성", "010-1234-1234", "관악구 보라매로", "근육 1도 없음")
+					.joinDate("2022-01-03")
+					.usrExpireDate("2022-12-28")
+					.enrollTime("2022-01-03 16:50:11")
+					.editTime("2022-02-04 16:22:00")
+					.build();
+			Usr1000Vo vo2 = new Usr1000Vo.Builder("lecharlhi", "llchh", "남성", "010-1234-1234", "관악구 보라매로", "지방 많음")
+					.joinDate("2022-02-10")
+					.usrExpireDate("2022-07-05")
+					.enrollTime("2022-02-10 15:50:11")
+					.editTime("2022-02-20 09:10:40")
+					.build();
+			usrMap.put(vo1.getUsrId(), vo1);
+			usrMap.put(vo2.getUsrId(), vo2);
 		}
 		if(usr1000DaoInstance == null) {
 			usr1000DaoInstance = new Usr1000DaoImpl();
 		}
-		Usr1000Vo vo1 = new Usr1000Vo.Builder("lsy9680", "ㅇㅅㅇ", "여성", "010-1234-1234", "관악구 보라매로", "근육 1도 없음")
-				.joinDate("2022-01-03")
-				.usrExpireDate("2022-12-28")
-				.enrollTime("2022-01-03 16:50:11")
-				.editTime("2022-02-04 16:22:00")
-				.build();
-		Usr1000Vo vo2 = new Usr1000Vo.Builder("lecharlhi", "llchh", "남성", "010-1234-1234", "관악구 보라매로", "지방 많음")
-				.joinDate("2022-02-10")
-				.usrExpireDate("2022-07-05")
-				.enrollTime("2022-02-10 15:50:11")
-				.editTime("2022-02-20 09:10:40")
-				.build();
-		usrMap.put(vo1.getUsrId(), vo1);
-		usrMap.put(vo2.getUsrId(), vo2);
 		
 		return usr1000DaoInstance;
 		
@@ -104,16 +104,13 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 	//회원 추가 <- 서비스에서 회원 조회 후
 	@Override
 	public int insertUsr1001(Usr1000Vo usrVo) {
-//		//회원이 있을 경우 -1 반환
-//		if(usrMap.containsKey(usrVo.getUsrId())) {
-//			return -1;
-//		}
 		//회원이 없을 경우 회원 추가 후 1 반환
 		int result = 0;
 		try {
 			usrMap.put(usrVo.getUsrId(), usrVo);
 			result++;
 		} catch (Exception e) {
+			result = -1;
 			e.printStackTrace();
 		}
 		return result;
@@ -162,13 +159,17 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 	//회원 삭제 <- 서비스에서 회원 조회 후
 	@Override
 	public int deleteUsr1003(Usr1000Vo usrVo) {
+		String key = usrVo.getUsrId();
 		int result = 0;
 		//사용 유무 = "N" 로 변경
 		try {
 			usrVo.setUseYn("N");
+			//map에 적용?
+			usrMap.put(key, usrVo);
 			result++;
 		} catch (Exception e) {
 			System.out.println("result = "+result);
+			result = -1;
 			e.printStackTrace();
 		}
 		return result;
@@ -252,12 +253,17 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 	
 	//회원 목록 <- 여기서 회원 상태 업데이트 후
 	@Override
-	public List<Usr1000Vo> selectCht1001List() throws Exception {
+	public List<Usr1000Vo> selectCht1001List() {
 		List<Usr1000Vo> returnList = new ArrayList<Usr1000Vo>();
-		for(Entry<String, Usr1000Vo> ele : usrMap.entrySet()) {
-			if(ele.getValue().getUseYn() == "Y") {
-				returnList.add(ele.getValue());
+		try {
+			for(Entry<String, Usr1000Vo> ele : usrMap.entrySet()) {
+				if(ele.getValue().getUseYn() == "Y") {
+					returnList.add(ele.getValue());
+				}
 			}
+		} catch (Exception e) {
+			System.out.println("usrDao,, 회원목록cht :: 없어서?길이0?");
+			e.printStackTrace();
 		}
 		return returnList;
 //		List<Map<String, Usr1000Vo>> showList = usrMaplist;

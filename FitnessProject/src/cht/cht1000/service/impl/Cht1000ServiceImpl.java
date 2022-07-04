@@ -1,6 +1,10 @@
 package cht.cht1000.service.impl;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import cht.cht1000.service.Cht1000Service;
 import usr.usr1000.dao.Usr1000Dao;
@@ -25,8 +29,30 @@ public class Cht1000ServiceImpl implements Cht1000Service{
 	
 	//회원 목록
 	@Override
-	public List<Usr1000Vo> selectCht1001List() throws Exception {
-		return usr1000Dao.selectCht1001List();
+	public List<Map<String, String>> selectCht1001List() throws Exception {
+		//dao에서 받아온 걸 각 요소(vo)를 꺼내서 new linkedmap에 저장
+		List<Usr1000Vo> returnList = usr1000Dao.selectCht1001List();
+		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+		
+		List<Map<String, String>> mapList = new ArrayList<Map<String,String>>();
+		
+		for (Usr1000Vo returnVo : returnList) {
+			Field[] fieldArr = returnVo.getClass().getDeclaredFields();
+			for (Field field : fieldArr) {
+				field.setAccessible(true);
+				String key = field.getName();
+				String val = "";
+				try {
+					val = (String) field.get(returnVo);
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					System.out.println("usr-조회-필드");
+					e.printStackTrace();
+				}
+				map.put(key, val);
+			}
+			mapList.add(map);
+		}
+		return mapList;
 	}
 
 

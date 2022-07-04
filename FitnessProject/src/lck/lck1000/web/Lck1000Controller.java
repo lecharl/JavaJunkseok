@@ -1,6 +1,7 @@
 package lck.lck1000.web;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ComController;
 
@@ -16,27 +17,26 @@ public class Lck1000Controller implements ComController {
 	
 	private Lck1000Service lck1000Service = new Lck1000ServiceImpl();
 
-	@Override
-	public void selectView(String request) throws Exception {
-		char tailRequest = request.charAt(1);
-		switch (tailRequest) {
-		case '0':
-			new Lck1000View().selectLck1000View();;
-			break;
-		case '1':
-			new Lck1001View().selectLck1001View();
-			break;
-		case '2':
-			new Lck1002View().selectLck1002View();
-			break;
-		case '3':
-			new Lck1003View().selectLck1003View();
-			break;
-		default:
-			break;
-		}
+	public Lck1000Controller(String request) {
+		// TODO Auto-generated constructor stub
 	}
+
 	
+	public Lck1000Controller(String request, String input) {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public Lck1000Controller(String request, Map<String, String> input) {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public Lck1000Controller() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	//사물함 조회
 	public Lck1000Vo selectLck1000(String input) {
 		return lck1000Service.selectLck1000(input);
@@ -77,6 +77,13 @@ public class Lck1000Controller implements ComController {
 		if(result == 4)
 			msg = "사물함이 성공적으로 삭제되었습니다.";
 		return msg;
+		
+	}
+
+
+	@Override
+	public void selectView(String request) {
+		// TODO Auto-generated method stub
 		
 	}
 }
