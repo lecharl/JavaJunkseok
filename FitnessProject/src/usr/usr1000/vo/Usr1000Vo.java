@@ -1,5 +1,17 @@
 package usr.usr1000.vo;
 
+/**
+ * @Class Name : Usr1000Vo.java
+ * @Description : Usr1000Vo Vo class
+ * 
+ * @author 이승연
+ * @Sincce 2022.06.24.
+ * @Versionn 1.0
+ * @see
+ * 
+ * Copyright (C) All right reserved.
+ *
+ */
 public class Usr1000Vo {
 	private String usrId;
 	private String usrName;
@@ -7,14 +19,14 @@ public class Usr1000Vo {
 	private String usrPhoneNum;
 	private String usrAddress;
 	private String usrDetail;	//회원 설명
-	private String usrStatus;	//회원 상태(정산/만료/임박)
+	private String usrStatus;	//회원 상태(정상/만료/임박)
 	private String joinDate;	//가입 일자
 	private String usrExpireDate;	//만료 일자
 	private String useYn;	//Y/N, 회원추가 시 자동 Y
 	private String enrollTime;	//등록 일시
 	private String editTime;	//수정 일시
 	
-	private String lckNo;	// **String? int?
+//	private String lckNo;	// **String? int?
 
 //	public Usr1000Vo(String usrId, String usrName, String usrGender, String usrPhoneNum, String usrAddress,
 //			String usrDetail, String joinDate, String usrExpireDate, String enrollTime,
@@ -48,7 +60,7 @@ public class Usr1000Vo {
 		useYn = builder.useYn;
 		enrollTime = builder.enrollTime;
 		editTime = builder.editTime;
-		lckNo = builder.lckNo;
+//		lckNo = builder.lckNo;
 	}
 	
 	public static class Builder{
@@ -204,13 +216,13 @@ public class Usr1000Vo {
 		this.editTime = editTime;
 	}
 	
-	public String getLckNo() {
-		return lckNo;
-	}
-	
-	public void setLckNo(String lckNo) {
-		this.lckNo = lckNo;
-	}
+//	public String getLckNo() {
+//		return lckNo;
+//	}
+//	
+//	public void setLckNo(String lckNo) {
+//		this.lckNo = lckNo;
+//	}
 
 //		toString()
 	@Override
@@ -218,8 +230,8 @@ public class Usr1000Vo {
 		return "- 회원 ID : " + usrId + "\n- 회원명 : " + usrName + "\n- 회원 성별 : " + usrGender + "\n- 회원 연락처 : "
 				+ usrPhoneNum + "\n- 회원 주소 : " + usrAddress + "\n- 회원 설명 : " + usrDetail + "\n- 회원 상태 : " + usrStatus
 				+ "\n- 가입 일자 : " + joinDate + "\n- 만료 일자 : " + usrExpireDate + "\n- 사용 유무 : " + useYn + "\n- 등록 일시 : "
-				+ enrollTime + "\n- 수정 일시 : " + editTime + "\n- 사물함 번호 : " + lckNo;
+				+ enrollTime + "\n- 수정 일시 : " + editTime;
 	}
 	
-
+// + "\n- 사물함 번호 : " + lckNo
 }

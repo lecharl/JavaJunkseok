@@ -1,15 +1,19 @@
 package cht.cht1000.dao.impl;
-import java.util.List;
 
 import cht.cht1000.dao.Cht1000Dao;
-import usr.usr1000.vo.Usr1000Vo;
 
+/**
+ * @Class Name : Cht1000DaoImpl.java
+ * @Description : Cht1000DaoImpl Dao class, Usr1000DaoImpl class로 대체
+ * 
+ * @author 이승연
+ * @Sincce 2022.06.24.
+ * @Versionn 1.0
+ * @see
+ * 
+ * Copyright (C) All right reserved.
+ *
+ */
 public class Cht1000DaoImpl implements Cht1000Dao{
-
-	//회원 목록
-//	@Override
-//	public List<Usr1000Vo> selectUsr1000List() {
-//		return null;
-//	}
 
 }

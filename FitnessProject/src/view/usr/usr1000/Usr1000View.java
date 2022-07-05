@@ -1,21 +1,26 @@
 package view.usr.usr1000;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.TreeMap;
-import java.util.Map.Entry;
 
 import com.ComController;
 import com.FrontController;
 
-import usr.usr1000.vo.Usr1000Vo;
-import usr.usr1000.web.Usr1000Controller;
-
 /*
  * 회원 조회
  */
-
+/**
+ * @Class Name : Usr1000View.java
+ * @Description : Usr1000View View class
+ * 
+ * @author 이승연
+ * @Sincce 2022.06.24.
+ * @Versionn 1.0
+ * @see
+ * 
+ * Copyright (C) All right reserved.
+ *
+ */
 public class Usr1000View {
 	static Scanner sc = new Scanner(System.in);
 
@@ -36,22 +41,27 @@ public class Usr1000View {
 				System.exit(0);
 			//회원 조회
 			}else {
-//			컨트롤러~
-				//다시 프론트 불러서 
 				LinkedHashMap<String, String> inputMap = new LinkedHashMap<String, String>();
-				inputMap.put("usrId", inputId);
+				inputMap.put("input", inputId);
 				ComController controller = FrontController.selectMapping("selectUsr1000");
+				ComController lckController = FrontController.selectMapping("selectLck1000");
 				try {
 					LinkedHashMap<String, String> returnMap = (LinkedHashMap<String, String>) controller.selectMethod("selectUsr1000", inputMap);
-//					LinkedHashMap<String, String> returnMap = (LinkedHashMap<String, String>) controller.selectUsr1000(inputId);
 					returnMap.forEach((key, value) -> {
-						System.out.printf("- %s : %s\n", key, value);
+						String keyStr = changeUsr1000Str(key);
+						System.out.printf("- %s : %s\n", keyStr, value);
 					});
-//					controller.selectMethod("selectUsr1000", inputId);
+					try {
+						LinkedHashMap<String, String> returnLckMap = (LinkedHashMap<String, String>) lckController.selectMethod("selectLck1000", inputMap);
+						System.out.printf("- 사물함 번호 : %s\n", returnLckMap.get("lckNo"));
+					} catch (Exception e) {
+					}
 				} catch (Exception e) {
-					System.out.println("다른 ID로 조회하세요.");
+					System.out.println(">> 다른 ID로 조회하세요.");
 //					e.printStackTrace();
 				}
+				
+				
 //				for (Entry<String, String> entrySet : returnMap.entrySet()) {
 //					System.out.printf("- %s : %s\n", entrySet.getKey(), entrySet.getValue());
 //				}
@@ -61,4 +71,43 @@ public class Usr1000View {
 		
 	}//selectUsr1000View() end
 	
+	public static String changeUsr1000Str(String key) {
+		String newStr = "회원 ID";
+		switch (key) {
+		case "usrName":
+			newStr = "사물함 번호";
+			break;
+		case "usrGender":
+			newStr = "회원 성별";
+			break;
+		case "usrPhoneNum":
+			newStr = "회원 연락처";
+			break;
+		case "usrAddress":
+			newStr = "회원 주소";
+			break;
+		case "usrDetail":
+			newStr = "회원 설명";
+			break;
+		case "usrStatus":
+			newStr = "회원 상태(정상/만료/임박)";
+			break;
+		case "joinDate":
+			newStr = "가입 일자";
+			break;
+		case "usrExpireDate":
+			newStr = "만료 일자";
+			break;
+		case "useYn":
+			newStr = "사용 유무";
+			break;
+		case "enrollTime":
+			newStr = "등록 일시";
+			break;
+		case "editTime":
+			newStr = "수정 일시";
+			break;
+		}
+		return newStr;
+	}
 }

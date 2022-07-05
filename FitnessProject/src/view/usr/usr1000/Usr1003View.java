@@ -6,59 +6,68 @@ import java.util.Scanner;
 import com.ComController;
 import com.FrontController;
 
-
-/*
- * 회원 삭제
+/**
+ * @Class Name : Usr1003View.java
+ * @Description : Usr1003View View class, 회원 삭제 화면
+ * 
+ * @author 이승연
+ * @Sincce 2022.06.24.
+ * @Versionn 1.0
+ * @see
+ * 
+ * Copyright (C) All right reserved.
+ *
  */
-
 public class Usr1003View {
 	static Scanner sc = new Scanner(System.in);
 	
+	/**
+	 * Usr1003View 화면 이동
+	 * @desc selectUsr1003View() 호출
+	 * 
+	 * @param 
+	 * @return 
+	 */
 	public static void callView() {
 		selectUsr1003View();
 	}
 	
+	/**
+	 * Usr1003View 화면 보여주기
+	 * @desc 
+	 * 
+	 * @param 
+	 * @return 
+	 */
 	public static void selectUsr1003View() {
 		System.out.println("\n[회원 삭제]======================================================================");
+		
 		while(true) {
 			System.out.print("\n* 삭제할 회원의 ID를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
 			String inputId = sc.nextLine().trim();
-			//메뉴 이동 먼저
+			
+			/* 메뉴 이동 */
+			//"999" 입력 시 이전 화면으로
 			if("999".equals(inputId)) {
 				break;
+			//"0" 입력 시 프로그램 종료
 			}else if("0".equals(inputId)) {
 				System.out.println("프로그램을 종료합니다.");
 				System.exit(0);
-			//id 조회하기 먼저 
+				
+			/* 그 외 */ 	
 			}else {
+				//입력한 문자열을 Map에 담기
 				LinkedHashMap<String, String> inputIdMap = new LinkedHashMap<String, String>();
-				inputIdMap.put("usrId", inputId);
-				ComController selectController = FrontController.selectMapping("insertUsr1001");
-				LinkedHashMap<String, String> returnMap = (LinkedHashMap<String, String>) selectController.selectMethod("selectUsr1000", inputIdMap);
-				//회원 없으면
-				if(returnMap == null) {
-					System.out.println("다른 ID로 조회하세요sdsdd.");
-					continue;
-				//회원 존재하면
-				}else {
-//				더블체크
-					if(!dblCheck1003View()) {
-						return;
-						//더블체크 통과하면 회원 삭제 후, 반복문 돌기
-					}else {
-						ComController controller = FrontController.selectMapping("deleteUsr1003");
-						String result = (String) controller.selectMethod("deleteUsr1003", returnMap);
-						System.out.println(result);
-					}
-				}
+				inputIdMap.put("input", inputId);
+				
+				/* 회원 삭제 요청을 받고 온 컨트롤러 */
+				ComController controller = FrontController.selectMapping("deleteUsr1003");
+				
+				String result = (String) controller.selectMethod("deleteUsr1003", inputIdMap);
+				System.out.println(result);
 			}
-		}//while end
-	}//deleteUsr1003View() end
+		}
+	}
 	
-	//더블 체크
-	public static boolean dblCheck1003View() {
-		System.out.print("정말로 삭제하시겠습니까? (Y/N) >> ");
-		String inputYn = sc.nextLine();
-		return ("Y".equalsIgnoreCase(inputYn))? true : false;
-	}//dblCheck1003View() end
 }

@@ -1,20 +1,28 @@
 package usr.usr1000.dao.impl;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import usr.usr1000.dao.Usr1000Dao;
 import usr.usr1000.vo.Usr1000Vo;
-
+/**
+ * @Class Name : Usr1000DaoImpl.java
+ * @Description : Usr1000DaoImpl Dao class
+ * 
+ * @author 이승연
+ * @Sincce 2022.06.24.
+ * @Versionn 1.0
+ * @see
+ * 
+ * Copyright (C) All right reserved.
+ *
+ */
 public class Usr1000DaoImpl implements Usr1000Dao{
 	
 	private static Usr1000DaoImpl usr1000DaoInstance;
@@ -24,12 +32,12 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 	//회원 정보를 담을 객체
 	private static Map<String, Usr1000Vo> usrMap;
 	Usr1000Vo vo;
-//	List<Map<String, Usr1000Vo>> usrMaplist = new ArrayList<Map<String,Usr1000Vo>>();
 	//날짜 포맷 2가지
-	SimpleDateFormat yMDFormat = new SimpleDateFormat("yyyy-MM-DD");
+	SimpleDateFormat yMDFormat = new SimpleDateFormat("yyyy-MM-dd");
 	SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	//날짜
-//	Calendar nowCal = Calendar.getInstance();
+	Calendar nowCal;
+	Calendar exCal;
 	
 	public static Usr1000DaoImpl getInstance() {
 		if(usrMap == null) {
@@ -42,7 +50,7 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 					.build();
 			Usr1000Vo vo2 = new Usr1000Vo.Builder("lecharlhi", "llchh", "남성", "010-1234-1234", "관악구 보라매로", "지방 많음")
 					.joinDate("2022-02-10")
-					.usrExpireDate("2022-07-05")
+					.usrExpireDate("2022-07-07")
 					.enrollTime("2022-02-10 15:50:11")
 					.editTime("2022-02-20 09:10:40")
 					.build();
@@ -59,46 +67,33 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 
 	//회원 조회(추가, 수정 및 삭제하기 전에 사전 검사)
 	@Override
-	public Usr1000Vo selectUsr1000(String usrId){
-		Usr1000Vo returnVo;
+	public Usr1000Vo selectUsr1000(String usrId) throws Exception{
+		Usr1000Vo returnVo = null;
 		//회원 존재, 사용 여부 == "Y"
 		if(usrMap.containsKey(usrId) && "Y".equals(usrMap.get(usrId).getUseYn())) {
 			returnVo = usrMap.get(usrId);
-		}else {
-			returnVo = null;
+			//회원 상태 업뎃**
+			nowCal = Calendar.getInstance();	//현재
+			exCal = Calendar.getInstance();
+			Date exDate = yMDFormat.parse(returnVo.getUsrExpireDate());
+			exCal.setTime(exDate);	//만료일자
+			
+//			System.out.println("저장된만료 : "+returnVo.getUsrExpireDate());
+//			System.out.println("만료 : "+exCal.getTime());
+//			System.out.println("현재 : "+nowCal.getTime());
+			long diffSec = (exCal.getTimeInMillis() - nowCal.getTimeInMillis())/1000;
+			double diffDay = (double)diffSec/(24*60*60);
+//			System.out.println("만료일자 - 현재날짜 차이 : "+diffDay);
+			if(diffDay <= 0) {
+				returnVo.setUsrStatus("만료");
+			}else if(0 < diffDay && diffDay <= 5){
+				returnVo.setUsrStatus("임박");
+			}else {
+				returnVo.setUsrStatus("정상");
+			}
 		}
-//		try {
-//			returnVo = usrMap.get(usrId);	//null -> catch
-//			if(usrMap.containsKey(usrId) && "Y".equals(returnVo.getUseYn())) {
-//				returnVo = usrMap.get(usrId);				
-//			}else {
-//				
-//			}
-//			
-//		} catch (NullPointerException e) {
-//			e.printStackTrace();
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//		Map<String, Usr1000Vo> returnMap = usrMap;
-//		final int LIST_SIZE = showList.size();	//잘나옴
-//		Usr1000Vo returnVo = null;
-//		for(int i=0; i<LIST_SIZE; i++) {
-//			HashMap<String, Usr1000Vo> hMap = new HashMap<String, Usr1000Vo>(showList.get(i));
-////			hMap.get(usrId).setusrs
-//			//회원이 없을 경우 null 반환
-//			if(!existUsr1000(hMap, usrId)) {
-////				returnVo = null;
-//				continue;
-//			//회원이 있을 경우 vo 반환
-//			}else {
-//				//**조회 시 회원 상태 업데이트
-////				updateCht1000Stt(usrId, hMap);
-//				returnVo = hMap.get(usrId);
-//				break;
-//			}
 		return returnVo;
-		}
+	}
 	
 
 	//회원 추가 <- 서비스에서 회원 조회 후
@@ -164,8 +159,6 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 		//사용 유무 = "N" 로 변경
 		try {
 			usrVo.setUseYn("N");
-			//map에 적용?
-			usrMap.put(key, usrVo);
 			result++;
 		} catch (Exception e) {
 			System.out.println("result = "+result);
@@ -177,87 +170,55 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 
 	
 	
-	//회원 수 <- 여기서 회원 목록 후
+	//회원 수
 	@Override
-	public int countCht1000() throws Exception {
+	public int countCht1000()  {
 		List<Usr1000Vo> returnList = selectCht1001List();
 		return returnList.size();
 	}
 
-	//상태 업데이트 <- 여기서 회원 조회 후
+	//임박, 만료 회원 수
 	@Override
-	public int updateCht1000Stt(String usrId, HashMap<String, Usr1000Vo> hMap) throws Exception {
-		Usr1000Vo returnVo = hMap.get(usrId);
-//		Usr1000Vo returnVo = selectUsr1000(usrId);
-		//만료 일자 : String -> Calendar
-		Calendar expCal = Calendar.getInstance();	//저장된 만료일자
-		Calendar nowCal = Calendar.getInstance();	//현재 시간
-//		System.out.println(returnVo.getUsrExpireDate());	//이거랑
-		expCal.clear();
+	public int countCht1000Stt(String status) {
+		List<Usr1000Vo> returnList = new ArrayList<Usr1000Vo>();
 		try {
-			Date dateExp = yMDFormat.parse(returnVo.getUsrExpireDate());//이거랑 왜 다르게 나오냐고1!!
-//			System.out.println("dateExp: "+dateExp);
-			expCal.setTime(dateExp);
-		} catch (ParseException e) {
-			e.printStackTrace();
+			for(Entry<String, Usr1000Vo> ele : usrMap.entrySet()) {
+//				System.out.println(ele.getValue());
+				//회원 상태 업뎃**
+				nowCal = Calendar.getInstance();	//현재
+				exCal = Calendar.getInstance();
+				Date exDate = yMDFormat.parse(ele.getValue().getUsrExpireDate());
+				exCal.setTime(exDate);	//만료일자
+				
+				long diffSec = (exCal.getTimeInMillis() - nowCal.getTimeInMillis())/1000;
+				double diffDay = (double)diffSec/(24*60*60);
+				if(diffDay <= 0) {
+					ele.getValue().setUsrStatus("만료");
+				}else if(0 < diffDay && diffDay <= 5){
+					ele.getValue().setUsrStatus("임박");
+				}else {
+					ele.getValue().setUsrStatus("정상");
+				}
+				
+				if("Y".equals(ele.getValue().getUseYn()) && status.equals(ele.getValue().getUsrStatus())) {
+					returnList.add(ele.getValue());
+				}
+			}
 		} catch (Exception e) {
+			System.out.println("usrDao,, 회원목록cht :: 없어서?길이0?");
 			e.printStackTrace();
 		}
-		//회원 상태 계산
-//		System.out.println("expCal : "+expCal.getTime());
-//		System.out.println("nowCal : "+nowCal.getTime());
-		long diffSec = (nowCal.getTimeInMillis() - expCal.getTimeInMillis()) / 1000;
-		long diffDay = diffSec/(60*60*24);
-//		System.out.println("diffDay : "+diffDay);
-		//회원 상태 set
-		if(diffDay >= 0) {
-			returnVo.setUsrStatus("만료");			
-		}else if(-5 <= diffDay && diffDay < 0){
-			returnVo.setUsrStatus("임박");
-		}else {
-			returnVo.setUsrStatus("정상");						
-		}
-		return 1;
+		return returnList.size();
 	}
 
 	
-	//임박, 만료 회원 수 <- 여기서 회원 상태 업데이트 후
-	@Override
-	public int countCht1000Stt(String status) throws Exception {
-		return 0;
-//		List<Map<String, Usr1000Vo>> showList = usrMaplist;
-//		final int LIST_SIZE = showList.size();
-//		int count = 0;
-////		Usr1000Vo returnVo = null;
-////		List<Usr1000Vo> returnList = new ArrayList<Usr1000Vo>();
-//		for(int i=0; i<LIST_SIZE; i++) {
-//			HashMap<String, Usr1000Vo> hMap = new HashMap<String, Usr1000Vo>(showList.get(i));
-//			Collection<Usr1000Vo> valueVo = hMap.values();
-//			Iterator<Usr1000Vo> it = valueVo.iterator();
-//			while(it.hasNext()) {	//1번만 돌림
-//				Usr1000Vo nextVo = it.next();
-//				//**회원 상태 업데이트 하고
-////				updateCht1000Stt(nextVo.getUsrId(), hMap);
-//				//**사용 유무 == "Y" && 상태 == "임박"
-//				if("Y".equals(nextVo.getUseYn()) && status.equals(nextVo.getUsrStatus())) {
-////					returnVo = nextVo;
-////					returnList.add(nextVo);
-//					count++;
-//				}
-//			}
-//			
-//		}//for end
-//		return count;
-	}
-
-	
-	//회원 목록 <- 여기서 회원 상태 업데이트 후
+	//회원 목록
 	@Override
 	public List<Usr1000Vo> selectCht1001List() {
 		List<Usr1000Vo> returnList = new ArrayList<Usr1000Vo>();
 		try {
 			for(Entry<String, Usr1000Vo> ele : usrMap.entrySet()) {
-				if(ele.getValue().getUseYn() == "Y") {
+				if("Y".equals(ele.getValue().getUseYn())) {
 					returnList.add(ele.getValue());
 				}
 			}
@@ -266,35 +227,6 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 			e.printStackTrace();
 		}
 		return returnList;
-//		List<Map<String, Usr1000Vo>> showList = usrMaplist;
-//		final int LIST_SIZE = showList.size();
-////		Usr1000Vo returnVo = null;
-//		List<Usr1000Vo> returnList = new ArrayList<Usr1000Vo>();
-//		for(int i=0; i<LIST_SIZE; i++) {
-//			HashMap<String, Usr1000Vo> hMap = new HashMap<String, Usr1000Vo>(showList.get(i));
-//			Collection<Usr1000Vo> valueVo = hMap.values();
-//			Iterator<Usr1000Vo> it = valueVo.iterator();
-//			while(it.hasNext()) {	//1번만 돌림
-//				Usr1000Vo nextVo = it.next();
-//				//**회원 상태 업데이트 하고
-////				updateCht1000Stt(nextVo.getUsrId(), hMap);
-//				if("Y".equals(nextVo.getUseYn())) {
-////					returnVo = nextVo;
-//					returnList.add(nextVo);
-//				}
-//			}
-//			
-////			for(Entry<String, Usr1000Vo> ele : hMap.entrySet()) {
-////				if(ele.getValue().getUseYn() == "Y") {
-////					returnVo = ele.getValue();
-////					returnList.add(returnVo);
-////				}
-////			}
-//			
-//		}//for end
-//		return returnList;
 	}
-
-	
 	
 }

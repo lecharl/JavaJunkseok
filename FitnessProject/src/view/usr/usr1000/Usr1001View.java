@@ -2,21 +2,27 @@ package view.usr.usr1000;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 import com.ComController;
 import com.FrontController;
 
-import usr.usr1000.vo.Usr1000Vo;
-import usr.usr1000.web.Usr1000Controller;
-
 /*
  * 회원 추가
  */
-
+/**
+ * @Class Name : Usr1001View.java
+ * @Description : Usr1001View View class
+ * 
+ * @author 이승연
+ * @Sincce 2022.06.24.
+ * @Versionn 1.0
+ * @see
+ * 
+ * Copyright (C) All right reserved.
+ *
+ */
 public class Usr1001View {
 	static Scanner sc = new Scanner(System.in);
 	//날짜 포맷 2가지
@@ -45,69 +51,13 @@ public class Usr1001View {
 			//id 조회하기 먼저 
 			}else {
 				LinkedHashMap<String, String> inputIdMap = new LinkedHashMap<String, String>();
-				inputIdMap.put("usrId", inputId);
-				ComController selectController = FrontController.selectMapping("insertUsr1001");
-				LinkedHashMap<String, String> returnMap = (LinkedHashMap<String, String>) selectController.selectMethod("selectUsr1000", inputIdMap);
-				//회원 존재하면
-				if(returnMap != null) {
-					System.out.println("1001이미 존재하는 회원입니다.");
-					continue;
-				//회원 없으면 유효성 검사
-				}else {
-					//유효하지 않으면 반복문 계속
-					if(!validUsr1001View(inputId)) {
-						System.out.println("입력한 ID가 유효하지 않습니다.");
-						continue;
-					//유효하면 
-					}else {
-						LinkedHashMap<String, String> inputMap = new LinkedHashMap<String, String>();
-						System.out.println("\n회원 ID : "+inputId);
-						inputMap.put("usrId", inputId);
-						System.out.print("회원명 : ");
-						String inputName = sc.nextLine();
-						inputMap.put("usrName", inputName);
-						System.out.print("회원 성별 : ");
-						String inputGender = sc.nextLine();
-						inputMap.put("usrGender", inputGender);
-						System.out.print("회원 연락처 : ");
-						String inputPhoneNum = sc.nextLine();
-						inputMap.put("usrPhoneNum", inputPhoneNum);
-						System.out.print("회원 주소 : ");
-						String inputAddresss = sc.nextLine();
-						inputMap.put("usrAddress", inputAddresss);
-						System.out.print("회원 설명 : ");
-						String inputDetail = sc.nextLine();
-						inputMap.put("usrDetail", inputDetail);
-						System.out.print("만료 일자(yyyy-MM-dd) : ");
-						String inputUsrExpireDate = sc.nextLine();
-						inputMap.put("usrExpireDate", inputUsrExpireDate);
-//					더블체크
-						if(!dblCheck1001View()) {
-							return;
-						}else {
-//							더블체크 통과하면 회원 추가 후, 반복문 돌기
-							ComController insertController = FrontController.selectMapping("insertUsr1001");
-							String result = (String) insertController.selectMethod("insertUsr1001", inputMap);
-							System.out.println(result);
-						}
-						continue;
-					}
-				}//유효하면 체크하기 else end
+				inputIdMap.put("input", inputId);
+				ComController controller = FrontController.selectMapping("insertUsr1001");
+				String result = (String) controller.selectMethod("insertUsr1001", inputIdMap);
+				System.out.println(result);
 			}//메뉴 이동 제외 else end
 		}//while end
 		
 	}//insertUsr1001View() end
 	
-	//	유효성 검사
-	public static boolean validUsr1001View(String inputId) {
-		//알파벳 소문자 최소한 1개 이상, 숫자 최소한 1개 이상으로 이루어진 최소 5자리
-		return Pattern.matches("^(?=.*[a-z])(?=.*\\d)[a-z\\d]{5,}$", inputId);
-	}//validUsr1001View() end
-	
-	//더블 체크
-	public static boolean dblCheck1001View() {
-		System.out.print("정말로 등록하시겠습니까? (Y/N) >> ");
-		String inputYn = sc.nextLine();
-		return ("Y".equalsIgnoreCase(inputYn))? true : false;
-	}//dblCheck1001View() end
 }

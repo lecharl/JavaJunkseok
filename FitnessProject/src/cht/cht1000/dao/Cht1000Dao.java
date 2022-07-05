@@ -1,19 +1,16 @@
 package cht.cht1000.dao;
 
-import java.util.List;
-
-import usr.usr1000.vo.Usr1000Vo;
-
+/**
+ * @Class Name : Cht1000Dao.java
+ * @Description : Cht1000Dao Dao Interface, Usr1000Dao Interface로 대체
+ * 
+ * @author 이승연
+ * @Sincce 2022.06.24.
+ * @Versionn 1.0
+ * @see
+ * 
+ * Copyright (C) All right reserved.
+ *
+ */
 public interface Cht1000Dao {
-//	//회원 수
-//	int countAllUsr();
-//	
-//	//임박 회원 수
-//	int countImmUsr(String stts);
-//	
-//	//만료 회원 수
-//	int countExpUsr(String stts);
-//	
-	//회원 목록
-//	List<Usr1000Vo> selectUsr1000List();
 }

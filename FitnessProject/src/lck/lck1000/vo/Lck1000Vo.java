@@ -1,5 +1,17 @@
 package lck.lck1000.vo;
 
+/**
+ * @Class Name : Lck1000Vo.java
+ * @Description : Lck1000Vo Vo class
+ * 
+ * @author 이승연
+ * @Sincce 2022.06.24.
+ * @Versionn 1.0
+ * @see
+ * 
+ * Copyright (C) All right reserved.
+ *
+ */
 public class Lck1000Vo {
 	private String lckNo;	//**String
 	private String usrId;	//**

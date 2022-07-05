@@ -5,10 +5,19 @@ import java.util.Scanner;
 import com.ComController;
 import com.FrontController;
 
-import view.usr.usr1000.Usr1000View;
-
+/**
+ * @Class Name : Cmm1000View.java
+ * @Description : Cmm1000View View class
+ * 
+ * @author 이승연
+ * @Sincce 2022.06.24.
+ * @Versionn 1.0
+ * @see
+ * 
+ * Copyright (C) All right reserved.
+ *
+ */
 public class Cmm1000View {
-//	FrontController frnController;
 	Scanner sc = new Scanner(System.in);
 	
 	//메뉴 루프 돌리기
@@ -22,11 +31,11 @@ public class Cmm1000View {
 				request = String.valueOf((Integer.valueOf(inputNum)-1));
 				//request = 0,10,11,12,13 20,21,22,23 30,31, 그외는 예외처리
 			} catch (NumberFormatException e) {
-				System.out.println("메뉴의 번호를 다시 입력해주세요.");
+				System.out.println(">> 메뉴의 번호를 다시 입력해주세요.");
 				continue;
 			}
 			if("0".equals(inputNum)) {
-				System.out.print("프로그램을 종료합니다.");
+				System.out.print(">> 프로그램을 종료합니다.");
 				System.exit(0);
 			}
 			String chgRequest = changeToClsName(request);
@@ -34,25 +43,10 @@ public class Cmm1000View {
 			try {
 				comController.selectView(chgRequest);
 			}catch (Exception e) {
-				System.out.println("메뉴의 번호를 다시 입력해주세요ㅇㅇㅇ.");
+				System.out.println(">> 메뉴의 번호를 다시 입력해주세요.");
 				e.printStackTrace();
 			}
 			
-//			if(comController == null) {
-//				continue;
-//			}
-//			ComController comController = (ComController) FrontController.selectMapping(request);
-//			try {
-//				if(comController != null) {
-//					comController.selectView(request);
-//				}
-//			}catch (NullPointerException e) {
-//				e.printStackTrace();
-//			}
-			
-//			if(frontController.selectMapList().indexOf(request) != -1){	
-//				frontController.selectController(request);
-//			}
 		}//while end
 	}
 
@@ -67,7 +61,7 @@ public class Cmm1000View {
 		System.out.println("3. 통계");
 		System.out.println("3-1) 회원 통계 \t 3-2) 회원 목록\n");
 		System.out.println("0. 종료");
-		System.out.print("선택할 메뉴의 번호를 입력하세요. (예: 회원 추가 :: 12, 종료 :: 0) >> ");
+		System.out.print("* 선택할 메뉴의 번호를 입력하세요. (예: 회원 추가 :: 12, 종료 :: 0) >> ");
 	}
 	
 	//request -> 클래스이름으로 바꾸기
