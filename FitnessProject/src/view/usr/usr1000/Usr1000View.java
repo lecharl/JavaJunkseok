@@ -6,12 +6,9 @@ import java.util.Scanner;
 import com.ComController;
 import com.FrontController;
 
-/*
- * 회원 조회
- */
 /**
  * @Class Name : Usr1000View.java
- * @Description : Usr1000View View class
+ * @Description : Usr1000View View class, 회원 조회 화면
  * 
  * @author 이승연
  * @Sincce 2022.06.24.
@@ -22,14 +19,26 @@ import com.FrontController;
  *
  */
 public class Usr1000View {
+	//입력 받을 Scanner 생성
 	static Scanner sc = new Scanner(System.in);
 
+	/**
+	 * Usr1000View 화면 이동
+	 * @desc 회원 조회 화면의 회원 조회 메뉴(selectUsr1000View()) 호출
+	 * 
+	 */
 	public static void callView() {
 		selectUsr1000View();
 	}
 	
+	/**
+	 * 회원 조회 메뉴
+	 * @desc 회원 조회 메뉴를 출력한다.
+	 * 
+	 */
 	public static void selectUsr1000View() {
 		System.out.println("\n[회원 조회]======================================================================");
+		
 		while(true) {
 			System.out.print("\n* 조회할 회원의 ID를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
 			String inputId = sc.nextLine().trim();
@@ -58,13 +67,7 @@ public class Usr1000View {
 					}
 				} catch (Exception e) {
 					System.out.println(">> 다른 ID로 조회하세요.");
-//					e.printStackTrace();
 				}
-				
-				
-//				for (Entry<String, String> entrySet : returnMap.entrySet()) {
-//					System.out.printf("- %s : %s\n", entrySet.getKey(), entrySet.getValue());
-//				}
 				
 			}
 		}//while end

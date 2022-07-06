@@ -7,7 +7,7 @@ import com.FrontController;
 
 /**
  * @Class Name : Cmm1000View.java
- * @Description : Cmm1000View View class
+ * @Description : Cmm1000View View class, 메인 화면
  * 
  * @author 이승연
  * @Sincce 2022.06.24.
@@ -18,39 +18,68 @@ import com.FrontController;
  *
  */
 public class Cmm1000View {
+	//입력 받을 Scanner 생성
 	Scanner sc = new Scanner(System.in);
 	
-	//메뉴 루프 돌리기
+	/**
+	 * 메인 메뉴(selectCmm1000View)를 반복문으로 계속 보여준다.
+	 * @desc 1.회원 id 유무 확인
+	 * 		 2.없는 회원일 경우 회원 정보 삽입
+	 * 
+	 */
+	//메인 메뉴
 	public void menuLoop() {
+
 		while(true) {
+			//메인 메뉴 호출
 			selectCmm1000View();
+			
+			//입력 inputNum = 0,11,12,13,14,21,22,23,24,31,32, 그외
 			String inputNum = sc.nextLine().trim();
-			//inputNum = 0,11,12,13,14,21,22,23,24,31,32, 그외
+			
+			/* 요청을 담을 request 
+			 * request = 0,10,11,12,13 20,21,22,23,30,31, 그외는 예외처리
+			 */
 			String request = "";
 			try {
+				//숫자로 바꿀 수 있는지 체크
 				request = String.valueOf((Integer.valueOf(inputNum)-1));
-				//request = 0,10,11,12,13 20,21,22,23 30,31, 그외는 예외처리
+			
+			//숫자로 바꿀 수 없는 문자열이 들어올 때 예외처리
 			} catch (NumberFormatException e) {
 				System.out.println(">> 메뉴의 번호를 다시 입력해주세요.");
 				continue;
 			}
+			
+			//"0" 입력 시 프로그램 종료
 			if("0".equals(inputNum)) {
 				System.out.print(">> 프로그램을 종료합니다.");
 				System.exit(0);
 			}
+			
+			//changeToClsName() 호출 : request를 클래스이름으로 바꾼 요청 chgRequest
 			String chgRequest = changeToClsName(request);
+			
+			//chgRequest에 맞는 컨트롤러 가져오기
 			ComController comController = FrontController.selectMapping(chgRequest);
+			
 			try {
+				//해당 컨트롤러로 화면 가져오기
 				comController.selectView(chgRequest);
+				
+			//chgRequest가 (10,11,12,13 20,21,22,23,30,31) 에 없을 경우
 			}catch (Exception e) {
 				System.out.println(">> 메뉴의 번호를 다시 입력해주세요.");
-				e.printStackTrace();
 			}
 			
 		}//while end
 	}
 
-	//대메뉴 출력
+	/**
+	 * 메인 화면의 메인 메뉴
+	 * @desc 메인 화면의 메인 메뉴를 출력한다.
+	 * 
+	 */
 	public void selectCmm1000View() {
 		System.out.println("\n*--*--*--*--*--*--*--*--*--*--*--*--[헬스장관리 프로젝트]--*--*--*--*--*--*--*--*--*--*--*--*");
 		System.out.println("[메뉴]");
@@ -64,7 +93,14 @@ public class Cmm1000View {
 		System.out.print("* 선택할 메뉴의 번호를 입력하세요. (예: 회원 추가 :: 12, 종료 :: 0) >> ");
 	}
 	
-	//request -> 클래스이름으로 바꾸기
+	/**
+	 * 요청에 맞게 클래스 이름으로 요청을 바꾼다.
+	 * @desc 1. 요청에 맞게 클래스 이름으로 요청을 바꾼 후, 그 요청을 FrontController의 selectMapping()가 받아 컨트롤러를 가져온다.
+	 * 		 2. 없으면 "다시 입력해 주세요." 출력
+	 * 
+	 * @param request 요청
+	 * @return clsName 요청을 바꾼 결과(문자열)
+	 */
 	public String changeToClsName(String request) {
 		String clsName = "";
 		switch (request) {
@@ -99,7 +135,7 @@ public class Cmm1000View {
 			clsName = "view.cht.cht1000.Cht1001View";
 			break;
 		default:
-			System.out.println("다시입ㄹ격ㄱㄱ");
+			System.out.println(">> 다시 입력해 주세요.");
 			break;
 		}
 		return clsName;

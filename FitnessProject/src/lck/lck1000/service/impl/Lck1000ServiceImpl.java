@@ -265,8 +265,6 @@ public class Lck1000ServiceImpl implements Lck1000Service{
      */
     public boolean isDateFormat(String str, SimpleDateFormat dateFormat) {
         try {
-            //  검증할 날짜 포맷 설정
-//            SimpleDateFormat dateFormatParser = new SimpleDateFormat(dateFormat);
             //  parse()에 잘못된 값이 들어오면 Exception을 리턴하도록 setLenient(false) 설정
         	dateFormat.setLenient(false);
             // 대상 인자 검증

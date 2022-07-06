@@ -81,7 +81,6 @@ public class Cht1000Controller implements ComController {
 		} catch (InvocationTargetException e) {
 			System.out.println("cht컨 : invo");
 			e.getTargetException().printStackTrace();
-//			e.printStackTrace();
 		}
 		
 	}
@@ -92,7 +91,6 @@ public class Cht1000Controller implements ComController {
 		Object newObj = null;
 		try {
 			Class<?> cls = Class.forName(obj.getClass().getName());
-//			Method m = cls.getDeclaredMethod(request, String.class);
 			Method m = cls.getMethod(request, Map.class);
 			newObj = m.invoke(obj, inputMap);
 		} catch (ClassNotFoundException e) {
@@ -139,7 +137,6 @@ public class Cht1000Controller implements ComController {
 		} catch (InvocationTargetException e) {
 			e.getTargetException().printStackTrace();
 			System.out.println("cht컨트롤 :: 존재하지 않는 사뭃입니다.");
-//			e.printStackTrace();
 		}
 		return newObj;		
 	}
@@ -167,7 +164,6 @@ public class Cht1000Controller implements ComController {
 		} catch (InvocationTargetException e) {
 			e.getTargetException().printStackTrace();
 			System.out.println("cht컨트롤 :: 존재하지 않는 사뭃입니다.");
-//			e.printStackTrace();
 		}
 		return newObj;		
 	}

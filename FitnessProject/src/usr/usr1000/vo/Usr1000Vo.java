@@ -26,27 +26,6 @@ public class Usr1000Vo {
 	private String enrollTime;	//등록 일시
 	private String editTime;	//수정 일시
 	
-//	private String lckNo;	// **String? int?
-
-//	public Usr1000Vo(String usrId, String usrName, String usrGender, String usrPhoneNum, String usrAddress,
-//			String usrDetail, String joinDate, String usrExpireDate, String enrollTime,
-//			String editTime) {
-//		super();
-//		this.usrId = usrId;
-//		this.usrName = usrName;
-//		this.usrGender = usrGender;
-//		this.usrPhoneNum = usrPhoneNum;
-//		this.usrAddress = usrAddress;
-//		this.usrDetail = usrDetail;
-//		this.usrStatus = "정산";	//자동
-//		this.joinDate = joinDate;	//자동??
-//		this.usrExpireDate = usrExpireDate;	//내가 입력
-//		this.useYn = "Y";	//자동
-//		this.enrollTime = enrollTime;	//자동??
-//		this.editTime = editTime;	//자동??
-//		this.lckNo = "";	//(자동)
-//	}
-	
 	private Usr1000Vo(Builder builder){
 		usrId = builder.usrId;
 		usrName = builder.usrName;

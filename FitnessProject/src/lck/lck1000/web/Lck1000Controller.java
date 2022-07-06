@@ -83,10 +83,8 @@ public class Lck1000Controller implements ComController {
 					lckMap = (LinkedHashMap<String, String>) lck1000Service.selectLck1000ById(input);
 					//있는데	
 					nowCal = Calendar.getInstance();	//현재
-//					nowCal.getTime();
 					Date exDate = yMDFormat.parse(lckMap.get("lckExpireDate"));
 					exCal.setTime(exDate);	//만료일자
-//					exCal.getTime();
 //					//만료일자 <= 현재날짜 -> 업뎃**하고 -> 배정
 					if(exCal.getTime().compareTo(nowCal.getTime()) != 1){
 						lckMap.put("usrId", "");
@@ -117,18 +115,18 @@ public class Lck1000Controller implements ComController {
 	
 	
 	//사물함 수정
-	public String updateLck1002(List<String> newList, String input) {
-		int result = 0; 
-		result = lck1000Service.updateLck1002(newList, input);
-		String msg = "";
-		//나중에 삼항연산자로 수정~~~~~~~~~~~~
-		if(result == 4) {
-			msg = "사물함이 성공적으로 수정되었습니다.";
-		}else {
-			msg = result+"사물함을 수정하는 데 실패하였습니다.";
-		}
-		return msg;
-	}
+//	public String updateLck1002(List<String> newList, String input) {
+//		int result = 0; 
+//		result = lck1000Service.updateLck1002(newList, input);
+//		String msg = "";
+//		//나중에 삼항연산자로 수정~~~~~~~~~~~~
+//		if(result == 4) {
+//			msg = "사물함이 성공적으로 수정되었습니다.";
+//		}else {
+//			msg = result+"사물함을 수정하는 데 실패하였습니다.";
+//		}
+//		return msg;
+//	}
 	
 	//사물함 삭제
 	public String deleteLck1003(Map<String, String> inputMap) {
@@ -196,7 +194,6 @@ public class Lck1000Controller implements ComController {
 		} catch (InvocationTargetException e) {
 			System.out.println("usr 컨 : invo");
 			e.getTargetException().printStackTrace();
-//			e.printStackTrace();
 		}
 	}
 
@@ -206,7 +203,6 @@ public class Lck1000Controller implements ComController {
 		Object newObj = null;
 		try {
 			Class<?> cls = Class.forName(obj.getClass().getName());
-//			Method m = cls.getDeclaredMethod(request, String.class);
 			Method m = cls.getMethod(request, Map.class);
 			newObj = m.invoke(obj, inputMap);
 		} catch (ClassNotFoundException e) {
@@ -225,7 +221,6 @@ public class Lck1000Controller implements ComController {
 		} catch (InvocationTargetException e) {
 			e.getTargetException().printStackTrace();
 			System.out.println("lck컨트롤 :: 존재하지 않는 회원입니다.");
-//			e.printStackTrace();
 		}
 		return newObj;
 	}

@@ -77,34 +77,6 @@ public class Lck1000DaoImpl implements Lck1000Dao {
 	
 	
 	
-//	@Override
-//	public Lck1000Vo selectLck1000(String input) {
-//		Lck1000Vo returnVo = null;
-//		//길이가 1~2인 문자열을 입력했을 경우
-//		if(1 <= input.length() && input.length() <= 2) {
-//			//1~99를 입력했을 경우
-//			if(1 <= Integer.valueOf(input) && Integer.valueOf(input) <= 99) {
-//				//**만료일자 업뎃
-////				updateLck1004UsrId(input);
-//				//만료되면(== 배정된 id 없음) 따로 하는 줄 알았는데 필요없네. 없는 채로 출력
-////				if(!"".equals(lckMap.get(input).getUsrId())) {
-//					returnVo = lckMap.get(input);
-////				}
-//			}
-//		//길이가 3이상인 문자열을 입력했을 경우 id와 일치하는지
-//		}else {
-//			for (Entry<String, Lck1000Vo> ele: lckMap.entrySet()) {
-//				String key = ele.getKey();
-//				Lck1000Vo val = ele.getValue();
-//				//**만료일자 업뎃
-////				updateLck1004UsrId(key);
-//				if(val.getUsrId().equals(input)) {
-//					returnVo = val;
-//				}
-//			}
-//		}
-//		return returnVo;
-//	}
 
 	//사물함 추가
 	@Override
@@ -120,24 +92,6 @@ public class Lck1000DaoImpl implements Lck1000Dao {
 			e.printStackTrace();
 		}
 		
-//		try {
-////			lckMap.replace(targetVo.getLckNo(), inputVo);
-//			targetVo.setUsrId(inputVo.getUsrId());
-//			chgId = inputVo.getUsrId();
-//			result++;
-//			targetVo.setLckExpireDate(inputVo.getLckExpireDate());
-//			result++;
-//			//**usrVo의 lckNo도 변경 
-//			usr1000Dao.selectUsr1000(chgId).setLckNo(targetVo.getLckNo());
-//			result++;
-//			//수정일시 변경 set(현재시간)
-//			nowCal = Calendar.getInstance();
-//			Usr1000Vo usrVo = usr1000Dao.selectUsr1000(chgId);
-//			usrVo.setEditTime(dateTimeFormat.format(nowCal.getTime()));
-//			result++;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
 		return result;
 	}
 	
@@ -185,8 +139,6 @@ public class Lck1000DaoImpl implements Lck1000Dao {
 		
 		try {
 			lckVo.setUsrId("");
-			//map에 적용?
-//			lckMap.put(key, lckVo);
 			result++;
 		} catch (Exception e) {
 			System.out.println("result = "+result);
@@ -194,42 +146,6 @@ public class Lck1000DaoImpl implements Lck1000Dao {
 			e.printStackTrace();
 		}
 		return result;
-//		String oldId = targetVo.getUsrId();
-//		int result = 0;
-//		try {
-//			targetVo.setUsrId("");
-//			result++;
-//			targetVo.setLckExpireDate("2020-01-01");
-//			result++;
-//			//**usrVo반영
-//			usr1000Dao.selectUsr1000(oldId).setLckNo("");
-//			result++;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return result;
 	}
 	
-	//만료일자 업데이트(조회할 때마다)
-	public void updateLck1004UsrId(String lckNo) {
-		Lck1000Vo returnVo = lckMap.get(lckNo);
-		Calendar calExp = Calendar.getInstance();
-		Calendar nowCal = Calendar.getInstance();
-		try {
-			Date dateExp = yMDFormat.parse(returnVo.getLckExpireDate());
-			calExp.setTime(dateExp);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		//날짜 차이 계산 -> 만료되면 id == ""
-		long diffMllSec = calExp.getTimeInMillis() - nowCal.getTimeInMillis();
-		if(diffMllSec <= 0) {
-			returnVo.setUsrId("");
-		}
-	}
-
-
-
-
-
 }

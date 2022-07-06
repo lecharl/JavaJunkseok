@@ -18,7 +18,6 @@ import java.util.Map;
 public interface Usr1000Service {
 
 	//회원 조회
-//	Usr1000Vo selectUsr1000(String usrId) throws Exception;
 	Map<String, String> selectUsr1000(String usrId) throws Exception;
 	
 	//회원 추가

@@ -23,21 +23,17 @@ public class Usr1003View {
 	
 	/**
 	 * Usr1003View 화면 이동
-	 * @desc selectUsr1003View() 호출
+	 * @desc 회원 삭제 화면의 회원 삭제 메뉴(selectUsr1003View()) 호출
 	 * 
-	 * @param 
-	 * @return 
 	 */
 	public static void callView() {
 		selectUsr1003View();
 	}
 	
 	/**
-	 * Usr1003View 화면 보여주기
-	 * @desc 
+	 * 회원 삭제 메뉴
+	 * @desc 회원 삭제 메뉴를 출력한다.
 	 * 
-	 * @param 
-	 * @return 
 	 */
 	public static void selectUsr1003View() {
 		System.out.println("\n[회원 삭제]======================================================================");

@@ -25,11 +25,6 @@ import usr.usr1000.service.impl.Usr1000ServiceImpl;
 public class Usr1000Controller implements ComController {
 
 	private Usr1000Service usr1000Service = new Usr1000ServiceImpl();
-//	//날짜 포맷 2가지
-//	SimpleDateFormat yMDFormat = new SimpleDateFormat("yyyy-MM-dd");
-//	SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//	//날짜
-//	Calendar nowCal;
 	
 	//회원 조회
 	public Map<String, String> selectUsr1000(Map<String, String> inputMap) {
@@ -131,7 +126,6 @@ public class Usr1000Controller implements ComController {
 		} catch (InvocationTargetException e) {
 			System.out.println("usr 컨 : invo");
 			e.getTargetException().printStackTrace();
-//			e.printStackTrace();
 		}
 	}
 
@@ -142,7 +136,6 @@ public class Usr1000Controller implements ComController {
 		Object newObj = null;
 		try {
 			Class<?> cls = Class.forName(obj.getClass().getName());
-//			Method m = cls.getDeclaredMethod(request, String.class);
 			Method m = cls.getMethod(request, Map.class);
 			newObj = m.invoke(obj, inputMap);
 		} catch (ClassNotFoundException e) {
@@ -161,39 +154,9 @@ public class Usr1000Controller implements ComController {
 		} catch (InvocationTargetException e) {
 			e.getTargetException().printStackTrace();
 			System.out.println("usr컨트롤 :: 존재하지 않는 회원입니다.");
-//			e.printStackTrace();
 		}
 		return newObj;		
 	}
 
-	//조회, 삭제
-//	@Override
-//	public Object selectMethod(String request, String input) {
-//		Object obj = new Usr1000Controller();
-//		Object newObj = null;
-//		try {
-//			Class<?> cls = Class.forName(obj.getClass().getName());
-////			Method m = cls.getDeclaredMethod(request, String.class);
-//			Method m = cls.getMethod(request, String.class);
-//			newObj = m.invoke(obj, input);
-//		} catch (ClassNotFoundException e) {
-//			System.out.println("usr컨트롤 :: 클래스 못찾음");
-//			e.printStackTrace();
-//		} catch (NoSuchMethodException e) {
-//			System.out.println("usr컨트롤 :: 메소드 못찾음");
-//			e.printStackTrace();
-//		} catch (SecurityException e) {
-//			System.out.println("usr컨트롤 :: 보안??");
-//			e.printStackTrace();
-//		} catch (IllegalAccessException e) {
-//			e.printStackTrace();
-//		} catch (IllegalArgumentException e) {
-//			e.printStackTrace();
-//		} catch (InvocationTargetException e) {
-//			System.out.println("usr컨트롤 :: 존재하지 않는 회원입니다.");
-////			e.printStackTrace();
-//		}
-//		return newObj;
-//	}
 
 }

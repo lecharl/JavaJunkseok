@@ -78,12 +78,8 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 			Date exDate = yMDFormat.parse(returnVo.getUsrExpireDate());
 			exCal.setTime(exDate);	//만료일자
 			
-//			System.out.println("저장된만료 : "+returnVo.getUsrExpireDate());
-//			System.out.println("만료 : "+exCal.getTime());
-//			System.out.println("현재 : "+nowCal.getTime());
 			long diffSec = (exCal.getTimeInMillis() - nowCal.getTimeInMillis())/1000;
 			double diffDay = (double)diffSec/(24*60*60);
-//			System.out.println("만료일자 - 현재날짜 차이 : "+diffDay);
 			if(diffDay <= 0) {
 				returnVo.setUsrStatus("만료");
 			}else if(0 < diffDay && diffDay <= 5){
