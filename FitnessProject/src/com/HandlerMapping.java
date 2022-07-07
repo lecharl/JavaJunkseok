@@ -24,7 +24,7 @@ public class HandlerMapping {
 	/* HandlerMapping 싱글톤 */
 	private static HandlerMapping handlerMapping;
 	private HandlerMapping() {}
-
+	
 	//매핑 모음
 	private static Map<String, ComController> map = new HashMap<String, ComController>();
 	
@@ -41,40 +41,41 @@ public class HandlerMapping {
 		}
 		
 		/* 메인 화면 */
-		map.put("00", new Cmm1000Controller());
+		map.put("00", Cmm1000Controller.getInstance());
 		
 		/* 회원 화면 */
-		map.put("view.usr.usr1000.Usr1000View", new Usr1000Controller());
-		map.put("view.usr.usr1000.Usr1001View", new Usr1000Controller());
-		map.put("view.usr.usr1000.Usr1002View", new Usr1000Controller());
-		map.put("view.usr.usr1000.Usr1003View", new Usr1000Controller());
+		map.put("view.usr.usr1000.Usr1000View", Usr1000Controller.getInstance());
+		map.put("view.usr.usr1000.Usr1001View", Usr1000Controller.getInstance());
+		map.put("view.usr.usr1000.Usr1002View", Usr1000Controller.getInstance());
+		map.put("view.usr.usr1000.Usr1003View", Usr1000Controller.getInstance());
 		
 		/* 회원 조회, 등록, 수정, 삭제 */
-		map.put("selectUsr1000", new Usr1000Controller());
-		map.put("insertUsr1001", new Usr1000Controller());
-		map.put("updateUsr1002", new Usr1000Controller());
-		map.put("deleteUsr1003", new Usr1000Controller());
+		map.put("selectUsr1000", Usr1000Controller.getInstance());
+		map.put("insertUsr1001", Usr1000Controller.getInstance());
+		map.put("updateUsr1002", Usr1000Controller.getInstance());
+		map.put("deleteUsr1003", Usr1000Controller.getInstance());
 		
 		/* 사물함 화면 */
-		map.put("view.lck.lck1000.Lck1000View", new Lck1000Controller());
-		map.put("view.lck.lck1000.Lck1001View", new Lck1000Controller());
-		map.put("view.lck.lck1000.Lck1002View", new Lck1000Controller());
-		map.put("view.lck.lck1000.Lck1003View", new Lck1000Controller());
+		map.put("view.lck.lck1000.Lck1000View", Lck1000Controller.getInstance());
+		map.put("view.lck.lck1000.Lck1001View", Lck1000Controller.getInstance());
+		map.put("view.lck.lck1000.Lck1002View", Lck1000Controller.getInstance());
+		map.put("view.lck.lck1000.Lck1003View", Lck1000Controller.getInstance());
 		
 		/* 사물함 조회, 등록, 수정, 삭제 */
-		map.put("selectLck1000", new Lck1000Controller());
-		map.put("insertLck1001", new Lck1000Controller());
-		map.put("updateLck1002", new Lck1000Controller());
-		map.put("deleteLck1003", new Lck1000Controller());
+		map.put("selectLck1000", Lck1000Controller.getInstance());
+		map.put("insertLck1001", Lck1000Controller.getInstance());
+		map.put("updateLck1002", Lck1000Controller.getInstance());
+		map.put("deleteLck1003", Lck1000Controller.getInstance());
 		
 		/* 통계 화면 */
-		map.put("view.cht.cht1000.Cht1000View", new Cht1000Controller());
-		map.put("view.cht.cht1000.Cht1001View", new Cht1000Controller());
+		map.put("view.cht.cht1000.Cht1000View", Cht1000Controller.getInstance());
+		map.put("view.cht.cht1000.Cht1001View", Cht1000Controller.getInstance());
 		
 		/* 통계 회원 수, 만료/임박 회원 수, 회원 목록 */
-		map.put("countCht1000", new Cht1000Controller());
-		map.put("countCht1000Stt", new Cht1000Controller());
-		map.put("selectCht1001List", new Cht1000Controller());
+		map.put("countCht1000", Cht1000Controller.getInstance());
+		map.put("countCht1000Stt", Cht1000Controller.getInstance());
+		map.put("selectCht1001List",Cht1000Controller.getInstance());
+		
 		return handlerMapping;
 	}
 	
