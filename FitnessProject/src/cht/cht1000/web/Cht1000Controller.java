@@ -9,6 +9,7 @@ import com.ComController;
 
 import cht.cht1000.service.Cht1000Service;
 import cht.cht1000.service.impl.Cht1000ServiceImpl;
+import usr.usr1000.web.Usr1000Controller;
 /**
  * @Class Name : Cht1000Controller.java
  * @Description : Cht1000Controller Controller class
@@ -22,6 +23,18 @@ import cht.cht1000.service.impl.Cht1000ServiceImpl;
  *
  */
 public class Cht1000Controller implements ComController {
+	
+	/* 싱글톤 */
+	private static Cht1000Controller cht1000Controller;
+	private Cht1000Controller() {}
+	
+	public static Cht1000Controller getInstance() {
+		if(cht1000Controller == null) {
+			cht1000Controller = new Cht1000Controller();
+		}
+		return cht1000Controller;
+	}
+	
 	
 	private Cht1000Service cht1000Service = new Cht1000ServiceImpl();
 
