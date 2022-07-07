@@ -11,6 +11,7 @@ import java.util.Map;
 
 import com.ComController;
 
+import cht.cht1000.web.Cht1000Controller;
 import lck.lck1000.service.Lck1000Service;
 import lck.lck1000.service.impl.Lck1000ServiceImpl;
 import usr.usr1000.service.Usr1000Service;
@@ -28,6 +29,17 @@ import usr.usr1000.service.impl.Usr1000ServiceImpl;
  *
  */
 public class Lck1000Controller implements ComController {
+	
+	/* 싱글톤 */
+	private static Lck1000Controller lck1000Controller;
+	private Lck1000Controller() {}
+	
+	public static Lck1000Controller getInstance() {
+		if(lck1000Controller == null) {
+			lck1000Controller = new Lck1000Controller();
+		}
+		return lck1000Controller;
+	}
 	
 	private Lck1000Service lck1000Service = new Lck1000ServiceImpl();
 	private Usr1000Service usr1000Service = new Usr1000ServiceImpl();
