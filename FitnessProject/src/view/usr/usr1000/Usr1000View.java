@@ -20,23 +20,25 @@ import com.FrontController;
  */
 public class Usr1000View {
 	//입력 받을 Scanner 생성
-	static Scanner sc = new Scanner(System.in);
+	Scanner sc = new Scanner(System.in);
 
 	/**
 	 * Usr1000View 화면 이동
 	 * @desc 회원 조회 화면의 회원 조회 메뉴(selectUsr1000View()) 호출
 	 * 
 	 */
-	public static void callView() {
+	public void callView() {
 		selectUsr1000View();
 	}
 	
 	/**
 	 * 회원 조회 메뉴
-	 * @desc 회원 조회 메뉴를 출력한다.
+	 * @desc 1. 조회할 회원 ID를 입력한다.
+	 * 		 2. 예외 처리 : "999"는 이전 메뉴로, "0"은 프로그램 종료, 회원 ID가 아닌 입력은 다시 메뉴 출력
+	 * 		 3. 회원 조회와 사물함 조회를 요청하여 받아온 컨트롤러로 회원 조회와 사물함 조회, 사물함이 존재한다면 사물함 번호도 함께 출력 
 	 * 
 	 */
-	public static void selectUsr1000View() {
+	public void selectUsr1000View() {
 		System.out.println("\n[회원 조회]======================================================================");
 		
 		while(true) {
@@ -46,7 +48,7 @@ public class Usr1000View {
 			if("999".equals(inputId)) {
 				break;
 			}else if("0".equals(inputId)) {
-				System.out.println("프로그램을 종료합니다.");
+				System.out.println(">> 프로그램을 종료합니다.");
 				System.exit(0);
 			//회원 조회
 			}else {
@@ -56,10 +58,20 @@ public class Usr1000View {
 				ComController lckController = FrontController.selectMapping("selectLck1000");
 				try {
 					LinkedHashMap<String, String> returnMap = (LinkedHashMap<String, String>) controller.selectMethod("selectUsr1000", inputMap);
-					returnMap.forEach((key, value) -> {
-						String keyStr = changeUsr1000Str(key);
-						System.out.printf("- %s : %s\n", keyStr, value);
-					});
+					final int mapSize = returnMap.size();
+					System.out.printf("- 회원 ID : %s\n", returnMap.get("usrId"));
+					System.out.printf("- 회원 이름 : %s\n", returnMap.get("usrName"));
+					System.out.printf("- 회원 성별 : %s\n", returnMap.get("usrGender"));
+					System.out.printf("- 회원 연락처 : %s\n", returnMap.get("usrPhoneNum"));
+					System.out.printf("- 회원 주소 : %s\n", returnMap.get("usrAddress"));
+					System.out.printf("- 회원 설명 : %s\n", returnMap.get("usrDetail"));
+					System.out.printf("- 회원 상태(정상/만료/임박): %s\n", returnMap.get("usrStatus"));
+					System.out.printf("- 가입 일자 : %s\n", returnMap.get("joinDate"));
+					System.out.printf("- 만료 일자 : %s\n", returnMap.get("usrExpireDate"));
+					System.out.printf("- 사용 유무 : %s\n", returnMap.get("useYn"));
+					System.out.printf("- 등록 일시 : %s\n", returnMap.get("enrollTime"));
+					System.out.printf("- 수정 일시 : %s\n", returnMap.get("editTime"));
+
 					try {
 						LinkedHashMap<String, String> returnLckMap = (LinkedHashMap<String, String>) lckController.selectMethod("selectLck1000", inputMap);
 						System.out.printf("- 사물함 번호 : %s\n", returnLckMap.get("lckNo"));
@@ -74,43 +86,4 @@ public class Usr1000View {
 		
 	}//selectUsr1000View() end
 	
-	public static String changeUsr1000Str(String key) {
-		String newStr = "회원 ID";
-		switch (key) {
-		case "usrName":
-			newStr = "사물함 번호";
-			break;
-		case "usrGender":
-			newStr = "회원 성별";
-			break;
-		case "usrPhoneNum":
-			newStr = "회원 연락처";
-			break;
-		case "usrAddress":
-			newStr = "회원 주소";
-			break;
-		case "usrDetail":
-			newStr = "회원 설명";
-			break;
-		case "usrStatus":
-			newStr = "회원 상태(정상/만료/임박)";
-			break;
-		case "joinDate":
-			newStr = "가입 일자";
-			break;
-		case "usrExpireDate":
-			newStr = "만료 일자";
-			break;
-		case "useYn":
-			newStr = "사용 유무";
-			break;
-		case "enrollTime":
-			newStr = "등록 일시";
-			break;
-		case "editTime":
-			newStr = "수정 일시";
-			break;
-		}
-		return newStr;
-	}
 }
