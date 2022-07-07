@@ -214,6 +214,22 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 		List<Usr1000Vo> returnList = new ArrayList<Usr1000Vo>();
 		try {
 			for(Entry<String, Usr1000Vo> ele : usrMap.entrySet()) {
+				//회원 상태 업뎃**
+				nowCal = Calendar.getInstance();	//현재
+				exCal = Calendar.getInstance();
+				Date exDate = yMDFormat.parse(ele.getValue().getUsrExpireDate());
+				exCal.setTime(exDate);	//만료일자
+				
+				long diffSec = (exCal.getTimeInMillis() - nowCal.getTimeInMillis())/1000;
+				double diffDay = (double)diffSec/(24*60*60);
+				if(diffDay <= 0) {
+					ele.getValue().setUsrStatus("만료");
+				}else if(0 < diffDay && diffDay <= 5){
+					ele.getValue().setUsrStatus("임박");
+				}else {
+					ele.getValue().setUsrStatus("정상");
+				}
+				
 				if("Y".equals(ele.getValue().getUseYn())) {
 					returnList.add(ele.getValue());
 				}
