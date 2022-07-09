@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -104,7 +105,7 @@ public class Usr1000ServiceImpl implements Usr1000Service {
 				}else {
 					//만료일자 > 현재날짜
 					//더블체크
-					if(CheckUsr1000("등록")) {
+					if(CheckUsr1006("등록")) {
 						LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 						map.put("usrId", inputMap.get("input"));
 						map.put("usrName", inputName);
@@ -139,18 +140,86 @@ public class Usr1000ServiceImpl implements Usr1000Service {
 
 	//회원 수정 <- 회원 조회 후
 	@Override
-	public int updateUsr1002(List<String> newList, String usrId) throws Exception {
-		//회원 조회
-//		Usr1000Vo returnVo = selectUsr1000(usrId);
-		Usr1000Vo returnVo = null;
-		//회원이 없으면(null 반환) -> -1
-		if(returnVo == null) {
-			return -1;
-		//회원이 있으면 -> 수정일시까지 다 수정되면 7이 반환됨
+	public int updateUsr1002(Map<String, String> usrMap) throws Exception {
+		//한줄 씩 출력
+		sc = new Scanner(System.in);
+		System.out.println("- 회원 ID : "+usrMap.get("usrId"));
+		System.out.print("- 회원명 : "+usrMap.get("usrName")+" >> ");
+		String inputName = sc.nextLine();
+		System.out.print("- 회원 성별 : "+usrMap.get("usrGender")+" >> ");
+		String inputGender = sc.nextLine();
+		System.out.print("- 회원 연락처 : "+usrMap.get("usrPhoneNum")+" >> ");
+		String inputPhoneNum = sc.nextLine();
+		System.out.print("- 회원 주소 : "+usrMap.get("usrAddress")+" >> ");
+		String inputAddresss = sc.nextLine();
+		System.out.print("- 회원 설명 : "+usrMap.get("usrDetail")+" >> ");
+		String inputDetail = sc.nextLine();
+		System.out.print("- 만료 일자 : "+usrMap.get("usrExpireDate")+" >> ");
+		String inputUsrExpireDate = sc.nextLine();
+		
+		//공백입력 예외 때문에 유효성검사 전에 Map에 담고 cmpInput1007()을 한다.
+		LinkedHashMap<String, String> newMap = new LinkedHashMap<String, String>();
+		newMap.put("usrId", usrMap.get("usrId"));
+		newMap.put("usrName", inputName);
+		newMap.put("usrGender", inputGender);
+		newMap.put("usrPhoneNum", inputPhoneNum);
+		newMap.put("usrAddress", inputAddresss);
+		newMap.put("usrDetail", inputDetail);
+		newMap.put("usrExpireDate", inputUsrExpireDate);
+		
+		//수정하지 않을 경우 기존의 값으로 대체
+		Map<String, String> realMap = cmpInput1007(usrMap, newMap);
+		
+		//유효성 검사: 성별, 연락처, 만료 일자
+		String rmGender = realMap.get("usrGender");
+		String rmPhnNum = realMap.get("usrPhoneNum");
+		String rmExpDate = realMap.get("usrExpireDate");
+		
+		if(validUsr1005(rmGender, rmPhnNum, rmExpDate)) {
+			//유효성 검사3: 입력한 만료일자가 현재날짜보다 이전일 때 -1
+			nowCal = Calendar.getInstance();
+			exCal = Calendar.getInstance();
+			
+			Date exDate = yMDFormat.parse(rmExpDate);
+			exCal.setTime(exDate);	//입력한 만료일자
+			nowCal = Calendar.getInstance();	//현재
+			
+			//만료일자 <= 현재날짜 -> -1
+			if(exCal.getTime().compareTo(nowCal.getTime()) != 1){
+				System.out.println(">> 현재 날짜보다 큰 날짜를 입력하세요");
+				return -1;
+			}else {
+				//만료일자 > 현재날짜
+				//더블체크
+				if(CheckUsr1006("수정")) {
+					Usr1000Vo returnVo = new Usr1000Vo.Builder(realMap.get("usrId"), realMap.get("usrName"), realMap.get("usrGender"), realMap.get("usrPhoneNum"), realMap.get("usrAddress"), realMap.get("usrDetail"))
+							.joinDate(realMap.get("joinDate"))
+							.usrExpireDate(realMap.get("usrExpireDate"))
+							.enrollTime(realMap.get("enrollTime"))
+//							.editTime(dateTimeFormat.format(nowCal.getTime()))
+							.build();	//수정일시는 dao에서
+					//회원 수정에 실패하면 -1, 성공하면 1
+					try {
+						return usr1000Dao.updateUsr1002(returnVo);
+					} catch (Exception e) {
+						System.out.println("usr수정 서비스에서 오류");
+						e.printStackTrace();
+						return -1;
+					}
+				}else {
+					//더블 체크 ㄴㄴ
+					return -1;
+				}
+			}
 		}else {
-			return usr1000Dao.updateUsr1002(newList, returnVo);
+			//유효성 검사2 통과 못하면
+			System.out.println(">> 성별, 연락처, 만료 일자를 형식에 맞춰 입력하세요.");
+			return -1;
 		}
+//		return 0;
 	}
+
+
 
 	//회원 삭제 <- 회원 조회 후
 	@Override
@@ -158,7 +227,7 @@ public class Usr1000ServiceImpl implements Usr1000Service {
 		//회원 조회 먼저, vo 반환 후 넘기기
 		Usr1000Vo returnVo = usr1000Dao.selectUsr1000(usrId);
 		//더블체크
-		if(CheckUsr1000("삭제")) {
+		if(CheckUsr1006("삭제")) {
 			//회원 삭제에 실패하면 -1, 성공하면 1
 			return usr1000Dao.deleteUsr1003(returnVo);
 		}else {
@@ -205,11 +274,21 @@ public class Usr1000ServiceImpl implements Usr1000Service {
     }	
 	
     //더블 체크
-  	public boolean CheckUsr1000(String str) {
+  	public boolean CheckUsr1006(String str) {
   		sc = new Scanner(System.in);
   		System.out.print("정말로 "+str+"하시겠습니까? (예: Y / 아니요: 아무 키) >> ");
   		String inputYn = sc.nextLine();
   		return ("Y".equalsIgnoreCase(inputYn))? true : false;
   	}
+	
+  	//새로 입력한 값이 ""이냐 아니냐에 따른 값 저장
+	private Map<String, String> cmpInput1007(Map<String, String> usrMap, Map<String, String> newMap) {
+		for (Entry<String, String> ele : newMap.entrySet()) {
+			if(!("".equals(ele.getValue()))) {
+				usrMap.put(ele.getKey(), ele.getValue());
+			}
+		}
+		return usrMap;
+	}
 	
 }

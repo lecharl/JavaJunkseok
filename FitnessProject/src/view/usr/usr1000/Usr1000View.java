@@ -58,7 +58,6 @@ public class Usr1000View {
 				ComController lckController = FrontController.selectMapping("selectLck1000");
 				try {
 					LinkedHashMap<String, String> returnMap = (LinkedHashMap<String, String>) controller.selectMethod("selectUsr1000", inputMap);
-					final int mapSize = returnMap.size();
 					System.out.printf("- 회원 ID : %s\n", returnMap.get("usrId"));
 					System.out.printf("- 회원 이름 : %s\n", returnMap.get("usrName"));
 					System.out.printf("- 회원 성별 : %s\n", returnMap.get("usrGender"));

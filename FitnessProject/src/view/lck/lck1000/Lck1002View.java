@@ -1,6 +1,10 @@
 package view.lck.lck1000;
 
+import java.util.LinkedHashMap;
 import java.util.Scanner;
+
+import com.ComController;
+import com.FrontController;
 
 /*
  * 사물함 수정
@@ -10,24 +14,24 @@ import java.util.Scanner;
  * @Description : Lck1002View View class
  * 
  * @author 이승연
- * @Sincce 2022.06.24.
- * @Versionn 1.0
+ * @Since 2022.06.24.
+ * @Version 1.0
  * @see
  * 
  * Copyright (C) All right reserved.
  *
  */
 public class Lck1002View {
-	static Scanner sc = new Scanner(System.in);
+	Scanner sc = new Scanner(System.in);
 	
-	public static void callView() {
+	public void callView() {
 		selectLck1002View();
 	}
 	
-	public static void selectLck1002View() {
+	public void selectLck1002View() {
 		System.out.println("\n[사물함 수정]======================================================================");
 		while(true) {
-			System.out.println("\n* 수정할 사물함의 번호(1~99) 또는 회원의 ID를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
+			System.out.print("\n* 수정할 사물함의 번호(1~99) 또는 회원의 ID를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
 			String input = sc.nextLine().trim();
 			
 			//메뉴 이동 먼저
@@ -36,6 +40,12 @@ public class Lck1002View {
 			}else if("0".equals(input)) {
 				System.out.println("프로그램을 종료합니다.");
 				System.exit(0);
+			}else {
+				LinkedHashMap<String, String> inputMap = new LinkedHashMap<String, String>();
+				inputMap.put("input", input);
+				ComController controller = FrontController.selectMapping("updateLck1002");
+				String result =  (String) controller.selectMethod("updateLck1002", inputMap);
+				System.out.println(result);
 			}
 //			else {
 //				//사물함 조회로 존재 여부 확인
@@ -108,10 +118,4 @@ public class Lck1002View {
 		}//while end
 	}//selectLck1002View() end
 
-	//더블 체크
-	public boolean dblCheck1002View() {
-		System.out.print("정말로 수정하시겠습니까? (Y/N) >> ");
-		String inputYn = sc.nextLine();
-		return ("Y".equalsIgnoreCase(inputYn))? true : false;
-	}//dblCheck1002View() end
 }

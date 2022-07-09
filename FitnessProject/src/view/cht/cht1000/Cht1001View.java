@@ -25,26 +25,41 @@ import cht.cht1000.web.Cht1000Controller;
  *
  */
 public class Cht1001View {
-	static Scanner sc = new Scanner(System.in);
+	Scanner sc = new Scanner(System.in);
 
-	public static void callView() {
+	public void callView() {
 		selectCht1001View();
 	}
 	
-	public static void selectCht1001View() {
+	public void selectCht1001View() {
 		System.out.println("\n[회원 목록]======================================================================");
 		ComController controller = FrontController.selectMapping("selectCht1001List");
 		List<Map<String, String>> returnList = (List<Map<String, String>>) ((Cht1000Controller)controller).selectMethod("selectCht1001List");
 		for (Map<String, String> map : returnList) {
-			map.forEach((key, value) -> {
-				String keyStr = changeUsr1000Str(key);
-				System.out.printf("- %s : %s\n", keyStr, value);
-			});
+			System.out.printf("- 회원 ID : %s\n", map.get("usrId"));
+			System.out.printf("- 회원 이름 : %s\n", map.get("usrName"));
+			System.out.printf("- 회원 성별 : %s\n", map.get("usrGender"));
+			System.out.printf("- 회원 연락처 : %s\n", map.get("usrPhoneNum"));
+			System.out.printf("- 회원 주소 : %s\n", map.get("usrAddress"));
+			System.out.printf("- 회원 설명 : %s\n", map.get("usrDetail"));
+			System.out.printf("- 회원 상태(정상/만료/임박): %s\n", map.get("usrStatus"));
+			System.out.printf("- 가입 일자 : %s\n", map.get("joinDate"));
+			System.out.printf("- 만료 일자 : %s\n", map.get("usrExpireDate"));
+			System.out.printf("- 사용 유무 : %s\n", map.get("useYn"));
+			System.out.printf("- 등록 일시 : %s\n", map.get("enrollTime"));
+			System.out.printf("- 수정 일시 : %s\n", map.get("editTime"));
+			if(map.containsKey("lckNo")) {
+				System.out.printf("- 사물함 번호 : %s\n", map.get("lckNo"));
+			}
+//			map.forEach((key, value) -> {
+//				String keyStr = changeUsr1000Str(key);
+//				System.out.printf("- %s : %s\n", keyStr, value);
+//			});
 			System.out.println("---------------------------------------------------");
 		}
 	}//selectCht1001View() end
 	
-	public static String changeUsr1000Str(String key) {
+	public String changeUsr1000Str(String key) {
 		String newStr = "회원 ID";
 		switch (key) {
 		case "usrName":

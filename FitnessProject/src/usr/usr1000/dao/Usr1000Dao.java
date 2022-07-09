@@ -25,7 +25,7 @@ public interface Usr1000Dao {
 	int insertUsr1001(Usr1000Vo usrVo);
 	
 	//회원 수정
-	int updateUsr1002(List<String> newList, Usr1000Vo usrVo);
+	int updateUsr1002(Usr1000Vo usrVo) throws Exception;
 	
 	//회원 삭제
 	int deleteUsr1003(Usr1000Vo usrVo);

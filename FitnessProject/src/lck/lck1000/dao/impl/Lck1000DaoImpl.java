@@ -97,38 +97,33 @@ public class Lck1000DaoImpl implements Lck1000Dao {
 	
 	//사물함 수정
 	@Override
-	public int updateLck1002(List<String> newList, Lck1000Vo targetVo, String input, Usr1000Dao usr1000Dao) {
-//		Calendar nowCal;
-//		int result = 0;
-//		try {
-//			//input이 lckNo라면
-//			if(targetVo.getLckNo().equals(input)) {
-//				targetVo.setUsrId(newList.get(0));
-//				result++;
-//				targetVo.setLckExpireDate(newList.get(1));
-//				result++;
-//			//input이 id라면....아 id 체크를 했어야 했구나
-//			}else if(targetVo.getUsrId().equals(input)) {
-//				targetVo.setLckNo(newList.get(0));
-//				result++;
-//				targetVo.setLckExpireDate(newList.get(1));
-//				result++;
-//			}
-//			//수정일시 변경 set(현재시간)
-//			nowCal = Calendar.getInstance();
-////			System.out.println(targetVo+"target");
-//			Usr1000Vo usrVo = usr1000Dao.selectUsr1000(targetVo.getUsrId());
-////			System.out.println(usrVo+"ggg");
-//			usrVo.setEditTime(dateTimeFormat.format(nowCal.getTime()));
-////			System.out.println(usrVo.getEditTime());
-//			result++;
-//			//**usrVo의 lckNo도 변경
-//			usrVo.setLckNo(targetVo.getLckNo());
-//			result++;
-//		} catch (Exception e) {
+	public int updateLck1002(Lck1000Vo lckVo, Lck1000Vo oldVo) {
+		
+		int result = 0;
+		
+		try {
+			//수정할 vo
+			oldVo.setUsrId("");
+			lckMap.put(oldVo.getLckNo(), oldVo);
+			try {
+				//새롭게 지정할 vo
+				lckMap.put(lckVo.getLckNo(), lckVo);
+				result++;
+			} catch (Exception e) {
+				//새롭게 저장 못할 때
+				result--;
+				System.out.println("새롭게 vo 수정 실패");
+//				e.printStackTrace();
+			}
+			
+		} catch (Exception e) {
+			//이전 걸 수정하지 못할 때
+			System.out.println("이전 vo 수정 실패");
 //			e.printStackTrace();
-//		}
-		return 0;
+		}
+		
+		return result;
+		
 	}
 
 	//사물함 삭제
@@ -147,5 +142,5 @@ public class Lck1000DaoImpl implements Lck1000Dao {
 		}
 		return result;
 	}
-	
+
 }

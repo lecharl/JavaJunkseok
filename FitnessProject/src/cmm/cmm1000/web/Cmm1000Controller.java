@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.ComController;
 
+import cht.cht1000.web.Cht1000Controller;
 import view.cmm.cmm1000.Cmm1000View;
 /**
  * @Class Name : Cmm1000Controller.java
@@ -18,6 +19,18 @@ import view.cmm.cmm1000.Cmm1000View;
  *
  */
 public class Cmm1000Controller implements ComController {
+	
+	/* 싱글톤 */
+	private static Cmm1000Controller cmm1000Controller;
+	private Cmm1000Controller() {}
+	
+	public static Cmm1000Controller getInstance() {
+		if(cmm1000Controller == null) {
+			cmm1000Controller = new Cmm1000Controller();
+		}
+		return cmm1000Controller;
+	}
+	
 	
 	/**
 	 * 요청에 맞는 화면 선택

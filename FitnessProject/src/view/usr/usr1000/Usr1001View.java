@@ -24,18 +24,18 @@ import com.FrontController;
  *
  */
 public class Usr1001View {
-	static Scanner sc = new Scanner(System.in);
+	Scanner sc = new Scanner(System.in);
 	//날짜 포맷 2가지
 	SimpleDateFormat yMDFormat = new SimpleDateFormat("yyyy-MM-dd");
 	SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	//날짜
 	Calendar nowCal;
 	
-	public static void callView() {
+	public void callView() {
 		selectUsr1001View();
 	}
 
-	public static void selectUsr1001View() {
+	public void selectUsr1001View() {
 		System.out.println("\n[회원 추가]======================================================================");
 		while(true) {
 			System.out.println("\n* 추가할 회원의 ID를 입력합니다.");

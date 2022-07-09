@@ -127,18 +127,30 @@ public class Lck1000Controller implements ComController {
 	
 	
 	//사물함 수정
-//	public String updateLck1002(List<String> newList, String input) {
-//		int result = 0; 
-//		result = lck1000Service.updateLck1002(newList, input);
-//		String msg = "";
-//		//나중에 삼항연산자로 수정~~~~~~~~~~~~
-//		if(result == 4) {
-//			msg = "사물함이 성공적으로 수정되었습니다.";
-//		}else {
-//			msg = result+"사물함을 수정하는 데 실패하였습니다.";
-//		}
-//		return msg;
-//	}
+	public String updateLck1002(Map<String, String> inputMap) {
+		int result = 0; 
+		String msg = "";
+		String input = inputMap.get("input");
+		//조회
+		try {
+			LinkedHashMap<String, String> lckMap = (LinkedHashMap<String, String>) selectLck1000(inputMap);
+			result = lck1000Service.updateLck1002(lckMap, input);
+				
+		} catch (Exception e) {
+			//사물함 없음, lckMap == null
+			msg = ">> 존재하지 않는 사물함입니다.";
+//			e.printStackTrace();
+		}
+		
+		
+		//나중에 삼항연산자로 수정~~~~~~~~~~~~
+		if(result == -1) {
+			msg = ">> 사물함 수정에 실패했습니다.";
+		}else if(result == 1) {
+			msg = ">> 사물함 수정에 성공했습니다.";
+		}
+		return msg;
+	}
 	
 	//사물함 삭제
 	public String deleteLck1003(Map<String, String> inputMap) {
@@ -193,7 +205,8 @@ public class Lck1000Controller implements ComController {
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
+			System.out.println(">> 프로그램을 종료합니다.");
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -204,8 +217,9 @@ public class Lck1000Controller implements ComController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			System.out.println("usr 컨 : invo");
-			e.getTargetException().printStackTrace();
+			System.out.println("프로그램을 종료합니다.");
+//			System.out.println("lck 컨 : invo");
+//			e.getTargetException().printStackTrace();
 		}
 	}
 

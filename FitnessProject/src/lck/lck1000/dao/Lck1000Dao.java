@@ -4,6 +4,7 @@ import java.util.List;
 
 import lck.lck1000.vo.Lck1000Vo;
 import usr.usr1000.dao.Usr1000Dao;
+import usr.usr1000.vo.Usr1000Vo;
 /**
  * @Class Name : Lck1000Dao.java
  * @Description : Lck1000Dao Dao interface
@@ -26,10 +27,9 @@ public interface Lck1000Dao {
 	int insertLck1001(Lck1000Vo lckVo);
 	
 	//사물함 수정
-	int updateLck1002(List<String> newList, Lck1000Vo targetVo, String input, Usr1000Dao usr1000Dao);
+	int updateLck1002(Lck1000Vo lckVo, Lck1000Vo oldVo);
 	
 	//사물함 삭제
 	int deleteLck1003(Lck1000Vo targetVo);
-
 
 }

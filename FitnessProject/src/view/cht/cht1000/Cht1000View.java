@@ -24,11 +24,11 @@ import cht.cht1000.web.Cht1000Controller;
  */
 public class Cht1000View {
 	
-	public static void callView() {
+	public void callView() {
 		selectCht1000View();
 	}
 	
-	public static void selectCht1000View() {
+	public void selectCht1000View() {
 		System.out.println("\n[회원 통계]======================================================================");
 		ComController controller = FrontController.selectMapping("countCht1000");
 		int cntResult = (int) ((Cht1000Controller)controller).selectMethod("countCht1000");

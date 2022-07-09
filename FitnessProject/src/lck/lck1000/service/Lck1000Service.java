@@ -26,7 +26,7 @@ public interface Lck1000Service {
 	int insertLck1001(Map<String, String> inputMap) throws Exception;
 
 	//사물함 수정
-	int updateLck1002(List<String> newList, String input);
+	int updateLck1002(Map<String, String> lckMap, String input);
 	
 	//사물함 삭제
 	int deleteLck1003(String lckNo) throws Exception;

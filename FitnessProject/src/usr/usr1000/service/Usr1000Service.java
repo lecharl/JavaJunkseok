@@ -24,7 +24,7 @@ public interface Usr1000Service {
 	int insertUsr1001(Map<String, String> inputMap) throws Exception;
 	
 	//회원 수정
-	int updateUsr1002(List<String> newList, String usrId) throws Exception;
+	int updateUsr1002(Map<String, String> inputMap) throws Exception;
 	
 	//회원 삭제
 	int deleteUsr1003(String usrId) throws Exception;

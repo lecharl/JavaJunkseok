@@ -79,10 +79,27 @@ public class Usr1000Controller implements ComController {
 	}
 	
 	//회원 수정
-	public String updateUsr1002(List<String> newList, String usrId)  throws Exception{
-		int result = usr1000Service.updateUsr1002(newList, usrId);
-		//수정 성공하면(7 반환)
-		return (result == 7)? "회원 수정에 성공하였습니다." : "회원 수정에 실패하였습니다.";
+	public String updateUsr1002(Map<String, String> inputMap)  throws Exception{
+		String msg = "";
+		int result = 0;
+		
+		//회원 먼저 조회
+		try {
+			LinkedHashMap<String, String> usrMap = (LinkedHashMap<String, String>) usr1000Service.selectUsr1000(inputMap.get("input"));
+			result = usr1000Service.updateUsr1002(usrMap);
+		} catch (Exception e) {
+			// 회원 없음, usrMap == null
+			msg = ">> 존재하지 않는 회원입니다.";
+//			e.printStackTrace();
+		}
+		
+		if(result == -1) {
+			msg = ">> 회원 수정에 실패했습니다.";
+		}else if(result == 1) {
+			msg = ">> 회원 수정에 성공했습니다.";
+		}
+		return msg;	
+
 	}
 
 	//회원 삭제

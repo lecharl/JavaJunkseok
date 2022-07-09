@@ -22,13 +22,13 @@ import com.FrontController;
  *
  */
 public class Lck1001View {
-	static Scanner sc = new Scanner(System.in);
+	Scanner sc = new Scanner(System.in);
 
-	public static void callView() {
+	public void callView() {
 		selectLck1001View();
 	}
 	
-	public static void selectLck1001View() {
+	public void selectLck1001View() {
 		System.out.println("\n[사물함 추가]======================================================================");
 		while(true) {
 			System.out.print("\n* 회원의 ID를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");

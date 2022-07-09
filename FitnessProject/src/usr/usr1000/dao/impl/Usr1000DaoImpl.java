@@ -42,13 +42,13 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 	public static Usr1000DaoImpl getInstance() {
 		if(usrMap == null) {
 			usrMap = new HashMap<String, Usr1000Vo>(); 
-			Usr1000Vo vo1 = new Usr1000Vo.Builder("lsy9680", "ㅇㅅㅇ", "여성", "010-1234-1234", "관악구 보라매로", "근육 1도 없음")
+			Usr1000Vo vo1 = new Usr1000Vo.Builder("lsy9680", "ㅇㅅㅇ", "여", "010-1234-1234", "관악구 보라매로", "근육 1도 없음")
 					.joinDate("2022-01-03")
 					.usrExpireDate("2022-12-28")
 					.enrollTime("2022-01-03 16:50:11")
 					.editTime("2022-02-04 16:22:00")
 					.build();
-			Usr1000Vo vo2 = new Usr1000Vo.Builder("lecharlhi", "llchh", "남성", "010-1234-1234", "관악구 보라매로", "지방 많음")
+			Usr1000Vo vo2 = new Usr1000Vo.Builder("lecharlhi11", "llchh", "남", "010-1234-1234", "관악구 보라매로", "지방 많음")
 					.joinDate("2022-02-10")
 					.usrExpireDate("2022-07-07")
 					.enrollTime("2022-02-10 15:50:11")
@@ -95,7 +95,6 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 	//회원 추가 <- 서비스에서 회원 조회 후
 	@Override
 	public int insertUsr1001(Usr1000Vo usrVo) {
-		//회원이 없을 경우 회원 추가 후 1 반환
 		int result = 0;
 		try {
 			usrMap.put(usrVo.getUsrId(), usrVo);
@@ -107,41 +106,38 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 		return result;
 	}
 
-	//회원 수정 - 서비스에서 회원 조회 후
-	//id를 제외 후 기존정보를 보여주고 나서
-//	@Override
-//	public int updateUsr1002(Usr1000Vo updatedUsrVo) {	//id를 제외한 새정보를 넘겨받음
-//		//회원이 있을 경우 정보 수정 :: id로 기존vo를 가져와서 setter(새vo.getter()) 
-//		Usr1000Vo oldUsrVo = usrMap.get(updatedUsrVo.getUsrId());
-//		return 0;
-//	}
 	
 	//회원 수정 <- 서비스에서 회원 조회 후
 	@Override
-	public int updateUsr1002(List<String> newList, Usr1000Vo usrVo) {
+	public int updateUsr1002(Usr1000Vo usrVo) throws Exception {
 		Calendar nowCal;
-//		Usr1000Vo returnVo = usrMap.get(usrId);
 		int result = 0;
-		//newList의 요소로 각각 set
+		
+		//회원 상태 업뎃**
+		nowCal = Calendar.getInstance();	//현재
+		exCal = Calendar.getInstance();
+		Date exDate = yMDFormat.parse(usrVo.getUsrExpireDate());
+		exCal.setTime(exDate);	//만료일자
+		
+		long diffSec = (exCal.getTimeInMillis() - nowCal.getTimeInMillis())/1000;
+		double diffDay = (double)diffSec/(24*60*60);
+		if(diffDay <= 0) {
+			usrVo.setUsrStatus("만료");
+		}else if(0 < diffDay && diffDay <= 5){
+			usrVo.setUsrStatus("임박");
+		}else {
+			usrVo.setUsrStatus("정상");
+		}
+		
+		//수정 일시 업뎃**
+		usrVo.setEditTime(dateTimeFormat.format(nowCal.getTime()));
+		
 		try {
-			usrVo.setUsrName(newList.get(0));
-			result++;
-			usrVo.setUsrGender(newList.get(1));
-			result++;
-			usrVo.setUsrPhoneNum(newList.get(2));
-			result++;
-			usrVo.setUsrAddress(newList.get(3));
-			result++;
-			usrVo.setUsrDetail(newList.get(4));
-			result++;
-			usrVo.setUsrExpireDate(newList.get(5));
-			result++;
-			//수정일시 set(현재 시간)
-			nowCal = Calendar.getInstance();
-			usrVo.setEditTime(dateTimeFormat.format(nowCal.getTime()));
+			usrMap.put(usrVo.getUsrId(), usrVo);
 			result++;
 		} catch (Exception e) {
-//			System.out.println("result = "+result);
+			result--;
+			System.out.println("수정오류result = "+result);
 			e.printStackTrace();
 		}
 		return result;
@@ -163,8 +159,6 @@ public class Usr1000DaoImpl implements Usr1000Dao{
 		}
 		return result;
 	}
-
-	
 	
 	//회원 수
 	@Override

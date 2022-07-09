@@ -19,14 +19,14 @@ import com.FrontController;
  *
  */
 public class Usr1003View {
-	static Scanner sc = new Scanner(System.in);
+	Scanner sc = new Scanner(System.in);
 	
 	/**
 	 * Usr1003View 화면 이동
 	 * @desc 회원 삭제 화면의 회원 삭제 메뉴(selectUsr1003View()) 호출
 	 * 
 	 */
-	public static void callView() {
+	public void callView() {
 		selectUsr1003View();
 	}
 	
@@ -35,7 +35,7 @@ public class Usr1003View {
 	 * @desc 회원 삭제 메뉴를 출력한다.
 	 * 
 	 */
-	public static void selectUsr1003View() {
+	public void selectUsr1003View() {
 		System.out.println("\n[회원 삭제]======================================================================");
 		
 		while(true) {

@@ -22,13 +22,13 @@ import com.FrontController;
  *
  */
 public class Lck1003View {
-	static Scanner sc = new Scanner(System.in);
+	Scanner sc = new Scanner(System.in);
 	
-	public static void callView() {
+	public void callView() {
 		selectLck1003View();
 	}
 	
-	public static void selectLck1003View() {
+	public void selectLck1003View() {
 		System.out.println("\n[사물함 삭제]======================================================================");
 		while(true) {
 			System.out.print("\n* 삭제할 사물함의 번호(1~99)를 입력하세요. (뒤로는 999, 종료하려면 0을 입력하세요.) >> ");
@@ -48,41 +48,8 @@ public class Lck1003View {
 				String result = (String) controller.selectMethod("deleteLck1003", inputMap);
 				System.out.println(result);
 				
-//				ComController selectController = FrontController.selectMapping("selectLck1000");
-//				try {
-//					LinkedHashMap<String, String> returnMap = (LinkedHashMap<String, String>) selectController.selectMethod("selectLck1000", inputMap);
-//					//returnMap의 usrId를 공백""과 비교
-//					//id가 배정되지 않은 아예 비어있는 사물함이라면
-//					if("".equals(returnMap.get("usrId"))) {
-//						System.out.println(">> 비어있는 사물함입니다.");
-//						continue;
-//					}else {
-//						//배정된 사물함이면
-////						더블 체크
-//						if(!dblCheck1003View()) {
-//							return;
-//						}else {
-//							//더블체크 통과하면 사물함 삭제
-//							ComController controller = FrontController.selectMapping("deleteLck1003");
-//							String result = (String) controller.selectMethod("deleteLck1003", inputMap);
-//							
-//							System.out.println(result);
-//						}
-//					}
-//				} catch (Exception e) {
-//					System.out.println(">> 다시 입력해주세요");
-////					e.printStackTrace();
-//				}
-				
-				
 			}
 		}
 	}
 
-	//더블 체크
-	public static boolean dblCheck1003View() {
-		System.out.print("정말로 삭제하시겠습니까? (Y/N) >> ");
-		String inputYn = sc.nextLine();
-		return ("Y".equalsIgnoreCase(inputYn))? true : false;
-	}//dblCheck1003View() end
 }
